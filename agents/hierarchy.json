@@ -1,0 +1,142 @@
+{
+  "hierarchy": {
+    "version": "1.0.0",
+    "description": "Agent hierarchy for the Daily Briefing System. Agents are organized by tier: Tier 1 (Executive) agents report directly to Brian. Tier 2 (Operational) agents handle day-to-day operations and report to Tier 1. Tier 3 (Support) agents perform background monitoring and feed into Tier 2.",
+    "tiers": {
+      "1": {
+        "name": "Executive",
+        "description": "Top-level agents that synthesize information and present it in the daily brief."
+      },
+      "2": {
+        "name": "Operational",
+        "description": "Agents that manage specific operational domains and report up to Executive agents."
+      },
+      "3": {
+        "name": "Support",
+        "description": "Background agents that continuously monitor, collect, and process information."
+      }
+    }
+  },
+  "agents": [
+    {
+      "agentId": "chief-of-staff",
+      "name": "Chief of Staff Agent",
+      "tier": 1,
+      "role": "Assembles the daily brief by collecting reports from all Tier 2 agents, prioritizing items, and flagging anything that requires Brian's immediate attention.",
+      "reportsTo": null,
+      "directReports": ["calendar-agent", "comms-agent", "project-agent", "client-agent", "fire-response-agent"],
+      "schedule": {
+        "nightly": "22:00",
+        "morning": "06:30"
+      },
+      "status": "active"
+    },
+    {
+      "agentId": "calendar-agent",
+      "name": "Calendar Management Agent",
+      "tier": 2,
+      "role": "Manages Brian's calendar — schedules, reschedules, and flags conflicts. Prepares the next day's schedule nightly and adjusts in the morning.",
+      "reportsTo": "chief-of-staff",
+      "directReports": ["calendar-scanner"],
+      "status": "active"
+    },
+    {
+      "agentId": "comms-agent",
+      "name": "Communications Agent",
+      "tier": 2,
+      "role": "Processes all emails, messages, and chat threads. Summarizes what needs a response, flags overdue follow-ups, and drafts replies when appropriate.",
+      "reportsTo": "chief-of-staff",
+      "directReports": ["email-scanner", "chat-scanner"],
+      "status": "active"
+    },
+    {
+      "agentId": "project-agent",
+      "name": "Project Tracking Agent",
+      "tier": 2,
+      "role": "Monitors all active projects, tracks milestones and deadlines, and generates status reports.",
+      "reportsTo": "chief-of-staff",
+      "directReports": ["milestone-tracker"],
+      "status": "active"
+    },
+    {
+      "agentId": "client-agent",
+      "name": "Client Relations Agent",
+      "tier": 2,
+      "role": "Tracks client onboarding, check-ins, and satisfaction. Ensures no client falls through the cracks.",
+      "reportsTo": "chief-of-staff",
+      "directReports": ["client-monitor"],
+      "status": "active"
+    },
+    {
+      "agentId": "fire-response-agent",
+      "name": "Urgent Issues Agent",
+      "tier": 2,
+      "role": "Monitors for critical issues, escalations, and emergencies. Coordinates agent response when fires arise.",
+      "reportsTo": "chief-of-staff",
+      "directReports": ["alert-monitor"],
+      "status": "active"
+    },
+    {
+      "agentId": "calendar-scanner",
+      "name": "Calendar Scanner",
+      "tier": 3,
+      "role": "Scans connected calendars for new events, conflicts, and changes. Feeds raw data to the Calendar Management Agent.",
+      "reportsTo": "calendar-agent",
+      "directReports": [],
+      "status": "active"
+    },
+    {
+      "agentId": "email-scanner",
+      "name": "Email Scanner",
+      "tier": 3,
+      "role": "Monitors email inboxes for new messages, categorizes them by urgency and topic.",
+      "reportsTo": "comms-agent",
+      "directReports": [],
+      "status": "active"
+    },
+    {
+      "agentId": "chat-scanner",
+      "name": "Chat Scanner",
+      "tier": 3,
+      "role": "Monitors chat platforms for messages requiring attention or follow-up.",
+      "reportsTo": "comms-agent",
+      "directReports": [],
+      "status": "active"
+    },
+    {
+      "agentId": "milestone-tracker",
+      "name": "Milestone Tracker",
+      "tier": 3,
+      "role": "Tracks project milestones against deadlines and flags items that are at risk or overdue.",
+      "reportsTo": "project-agent",
+      "directReports": [],
+      "status": "active"
+    },
+    {
+      "agentId": "client-monitor",
+      "name": "Client Monitor",
+      "tier": 3,
+      "role": "Monitors client activity, onboarding progress, and flags clients that haven't been contacted recently.",
+      "reportsTo": "client-agent",
+      "directReports": [],
+      "status": "active"
+    },
+    {
+      "agentId": "alert-monitor",
+      "name": "Alert Monitor",
+      "tier": 3,
+      "role": "Continuously watches for system alerts, critical emails, and escalation triggers.",
+      "reportsTo": "fire-response-agent",
+      "directReports": [],
+      "status": "active"
+    }
+  ],
+  "statusDefinitions": {
+    "active": "Agent is online and performing its duties on schedule.",
+    "in-progress": "Agent is actively processing a specific task right now.",
+    "pending": "Agent is queued and will begin work shortly.",
+    "idle": "Agent is on standby, waiting to be triggered.",
+    "blocked": "Agent cannot proceed due to a dependency or issue.",
+    "offline": "Agent is not currently running."
+  }
+}

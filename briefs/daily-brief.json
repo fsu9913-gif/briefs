@@ -1,0 +1,294 @@
+{
+  "brief": {
+    "id": "daily-brief",
+    "title": "Daily Executive Brief",
+    "type": "daily-briefing",
+    "classification": "INTERNAL — BRIAN ONLY",
+    "recipient": "Brian",
+    "version": "1.0.0",
+    "generatedBy": "chief-of-staff",
+    "generatedAt": "2026-03-10T06:30:00Z",
+    "briefDate": "2026-03-10",
+    "nextBriefing": "2026-03-11T06:30:00Z"
+  },
+  "executiveSummary": {
+    "topLine": "3 items require your attention today. Calendar is 80% set for the day. 1 urgent client follow-up is overdue.",
+    "priorities": [
+      {
+        "id": "p1",
+        "level": "critical",
+        "title": "Overdue client follow-up: Acme Corp",
+        "summary": "Acme Corp hasn't received a response in 3 business days. Their contract renewal is pending.",
+        "sourceAgent": "client-agent",
+        "actionRequired": true,
+        "suggestedAction": "Send follow-up email or schedule a call today."
+      },
+      {
+        "id": "p2",
+        "level": "high",
+        "title": "Product Launch deadline approaching",
+        "summary": "Product Launch milestone 'Beta Release' is due in 2 days. 3 of 5 tasks are complete.",
+        "sourceAgent": "project-agent",
+        "actionRequired": true,
+        "suggestedAction": "Review remaining tasks and confirm timeline with team."
+      },
+      {
+        "id": "p3",
+        "level": "medium",
+        "title": "5 unread emails flagged for response",
+        "summary": "Communications agent identified 5 emails from this week that need a reply. 2 are from clients, 3 are internal.",
+        "sourceAgent": "comms-agent",
+        "actionRequired": false,
+        "suggestedAction": "Review flagged emails during afternoon block."
+      }
+    ]
+  },
+  "sections": [
+    {
+      "id": "calendar",
+      "title": "Today's Schedule",
+      "sourceAgent": "calendar-agent",
+      "icon": "calendar",
+      "items": [
+        {
+          "time": "07:00",
+          "title": "Morning Brief Review",
+          "type": "briefing",
+          "status": "confirmed",
+          "notes": "Review this daily brief and approve calendar."
+        },
+        {
+          "time": "09:00",
+          "title": "Team Standup",
+          "type": "meeting",
+          "status": "confirmed",
+          "notes": "Weekly sync with project leads."
+        },
+        {
+          "time": "10:30",
+          "title": "Client Call — Acme Corp",
+          "type": "client-meeting",
+          "status": "suggested",
+          "notes": "Suggested by Client Relations Agent to address overdue follow-up."
+        },
+        {
+          "time": "13:00",
+          "title": "Product Launch Review",
+          "type": "project-review",
+          "status": "confirmed",
+          "notes": "Review Beta Release milestone progress."
+        },
+        {
+          "time": "15:00",
+          "title": "Email & Message Block",
+          "type": "focus-time",
+          "status": "confirmed",
+          "notes": "Dedicated time to process flagged communications."
+        },
+        {
+          "time": "16:30",
+          "title": "Open Block",
+          "type": "available",
+          "status": "open",
+          "notes": "Available for ad-hoc meetings or overflow."
+        }
+      ]
+    },
+    {
+      "id": "communications",
+      "title": "Communications Summary",
+      "sourceAgent": "comms-agent",
+      "icon": "mail",
+      "stats": {
+        "unreadEmails": 12,
+        "flaggedForResponse": 5,
+        "chatMentions": 3,
+        "overdueFollowUps": 1
+      },
+      "highlights": [
+        {
+          "type": "email",
+          "from": "Acme Corp (Sarah Johnson)",
+          "subject": "Contract Renewal — Need Update",
+          "priority": "critical",
+          "daysSinceReceived": 3,
+          "snippet": "Hi Brian, following up on the renewal terms we discussed..."
+        },
+        {
+          "type": "email",
+          "from": "Marketing Team",
+          "subject": "Campaign Assets Ready for Review",
+          "priority": "medium",
+          "daysSinceReceived": 1,
+          "snippet": "The Q2 campaign materials are ready for your sign-off..."
+        },
+        {
+          "type": "chat",
+          "from": "Dev Team (Slack)",
+          "subject": "Beta deployment question",
+          "priority": "high",
+          "daysSinceReceived": 0,
+          "snippet": "Need your approval on the staging environment config before we deploy..."
+        }
+      ]
+    },
+    {
+      "id": "projects",
+      "title": "Active Projects",
+      "sourceAgent": "project-agent",
+      "icon": "project",
+      "projects": [
+        {
+          "name": "Product Launch",
+          "status": "at-risk",
+          "progress": 60,
+          "nextMilestone": "Beta Release",
+          "milestoneDue": "2026-03-12",
+          "openTasks": 2,
+          "completedTasks": 3,
+          "blockers": []
+        },
+        {
+          "name": "Website Redesign",
+          "status": "on-track",
+          "progress": 85,
+          "nextMilestone": "Final QA",
+          "milestoneDue": "2026-03-17",
+          "openTasks": 3,
+          "completedTasks": 17,
+          "blockers": []
+        },
+        {
+          "name": "Client Onboarding (New Clients)",
+          "status": "on-track",
+          "progress": 40,
+          "nextMilestone": "Kickoff Meetings",
+          "milestoneDue": "2026-03-14",
+          "openTasks": 4,
+          "completedTasks": 3,
+          "blockers": []
+        },
+        {
+          "name": "Marketing Campaign Q2",
+          "status": "on-track",
+          "progress": 25,
+          "nextMilestone": "Asset Review",
+          "milestoneDue": "2026-03-20",
+          "openTasks": 6,
+          "completedTasks": 2,
+          "blockers": []
+        }
+      ]
+    },
+    {
+      "id": "clients",
+      "title": "Client Status",
+      "sourceAgent": "client-agent",
+      "icon": "people",
+      "clients": [
+        {
+          "name": "Acme Corp",
+          "status": "needs-attention",
+          "lastContact": "2026-03-05",
+          "nextAction": "Follow up on contract renewal",
+          "health": "yellow"
+        },
+        {
+          "name": "Globex Inc",
+          "status": "healthy",
+          "lastContact": "2026-03-08",
+          "nextAction": "Onboarding kickoff scheduled Mar 14",
+          "health": "green"
+        },
+        {
+          "name": "Initech",
+          "status": "healthy",
+          "lastContact": "2026-03-09",
+          "nextAction": "No action needed this week",
+          "health": "green"
+        },
+        {
+          "name": "Umbrella LLC",
+          "status": "new",
+          "lastContact": null,
+          "nextAction": "Send welcome package",
+          "health": "blue"
+        }
+      ]
+    },
+    {
+      "id": "fires",
+      "title": "Urgent Issues",
+      "sourceAgent": "fire-response-agent",
+      "icon": "alert",
+      "activeAlerts": [],
+      "resolvedToday": [],
+      "allClear": true,
+      "message": "No active fires. All systems operating normally."
+    }
+  ],
+  "agentStatusBoard": {
+    "description": "Live status of all agents in the hierarchy.",
+    "agents": [
+      { "agentId": "chief-of-staff", "name": "Chief of Staff", "tier": 1, "status": "active", "lastReport": "2026-03-10T06:30:00Z" },
+      { "agentId": "calendar-agent", "name": "Calendar Agent", "tier": 2, "status": "active", "lastReport": "2026-03-10T06:25:00Z" },
+      { "agentId": "comms-agent", "name": "Communications Agent", "tier": 2, "status": "active", "lastReport": "2026-03-10T06:28:00Z" },
+      { "agentId": "project-agent", "name": "Project Tracking Agent", "tier": 2, "status": "active", "lastReport": "2026-03-10T06:20:00Z" },
+      { "agentId": "client-agent", "name": "Client Relations Agent", "tier": 2, "status": "active", "lastReport": "2026-03-10T06:22:00Z" },
+      { "agentId": "fire-response-agent", "name": "Urgent Issues Agent", "tier": 2, "status": "active", "lastReport": "2026-03-10T06:29:00Z" },
+      { "agentId": "calendar-scanner", "name": "Calendar Scanner", "tier": 3, "status": "active", "lastReport": "2026-03-10T06:15:00Z" },
+      { "agentId": "email-scanner", "name": "Email Scanner", "tier": 3, "status": "active", "lastReport": "2026-03-10T06:18:00Z" },
+      { "agentId": "chat-scanner", "name": "Chat Scanner", "tier": 3, "status": "active", "lastReport": "2026-03-10T06:19:00Z" },
+      { "agentId": "milestone-tracker", "name": "Milestone Tracker", "tier": 3, "status": "active", "lastReport": "2026-03-10T06:10:00Z" },
+      { "agentId": "client-monitor", "name": "Client Monitor", "tier": 3, "status": "active", "lastReport": "2026-03-10T06:12:00Z" },
+      { "agentId": "alert-monitor", "name": "Alert Monitor", "tier": 3, "status": "active", "lastReport": "2026-03-10T06:29:00Z" }
+    ]
+  },
+  "actionItems": [
+    {
+      "id": "a1",
+      "priority": "critical",
+      "title": "Respond to Acme Corp on contract renewal",
+      "owner": "Brian",
+      "dueBy": "2026-03-10T12:00:00Z",
+      "sourceAgent": "client-agent",
+      "status": "pending"
+    },
+    {
+      "id": "a2",
+      "priority": "high",
+      "title": "Review Product Launch Beta Release tasks",
+      "owner": "Brian",
+      "dueBy": "2026-03-10T14:00:00Z",
+      "sourceAgent": "project-agent",
+      "status": "pending"
+    },
+    {
+      "id": "a3",
+      "priority": "high",
+      "title": "Approve staging environment config for beta deploy",
+      "owner": "Brian",
+      "dueBy": "2026-03-10T11:00:00Z",
+      "sourceAgent": "comms-agent",
+      "status": "pending"
+    },
+    {
+      "id": "a4",
+      "priority": "medium",
+      "title": "Review and respond to 5 flagged emails",
+      "owner": "Brian",
+      "dueBy": "2026-03-10T17:00:00Z",
+      "sourceAgent": "comms-agent",
+      "status": "pending"
+    },
+    {
+      "id": "a5",
+      "priority": "low",
+      "title": "Send welcome package to Umbrella LLC",
+      "owner": "Brian",
+      "dueBy": "2026-03-12T17:00:00Z",
+      "sourceAgent": "client-agent",
+      "status": "pending"
+    }
+  ]
+}
