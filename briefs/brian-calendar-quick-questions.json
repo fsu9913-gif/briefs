@@ -1,0 +1,202 @@
+{
+  "brief": {
+    "id": "brian-calendar-quick-questions",
+    "title": "Brian's Calendar Quick Questions",
+    "description": "Multiple choice quick question brief for Brian to identify which projects need to be on the calendar, when they should be scheduled, and review the current status of all agent tasks.",
+    "type": "multiple-choice-questionnaire",
+    "recipient": "Brian",
+    "version": "1.0.0"
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "text": "Which projects need to be added to the calendar this week?",
+      "type": "multiple-choice",
+      "allowMultiple": true,
+      "options": [
+        { "label": "A", "value": "client_onboarding", "text": "Client Onboarding" },
+        { "label": "B", "value": "website_redesign", "text": "Website Redesign" },
+        { "label": "C", "value": "marketing_campaign", "text": "Marketing Campaign" },
+        { "label": "D", "value": "product_launch", "text": "Product Launch" },
+        { "label": "E", "value": "internal_review", "text": "Internal Review / Team Sync" },
+        { "label": "F", "value": "client_followup", "text": "Client Follow-Up Meetings" },
+        { "label": "G", "value": "other", "text": "Other (please specify)" }
+      ],
+      "followUp": {
+        "condition": "option_selected",
+        "target": "G",
+        "prompt": "Please describe the project to add:"
+      }
+    },
+    {
+      "id": "q2",
+      "text": "When should the selected projects be scheduled?",
+      "type": "multiple-choice",
+      "allowMultiple": false,
+      "perProject": true,
+      "note": "This question repeats for each project selected in Q1.",
+      "options": [
+        { "label": "A", "value": "today", "text": "Today" },
+        { "label": "B", "value": "tomorrow", "text": "Tomorrow" },
+        { "label": "C", "value": "this_week", "text": "Later This Week" },
+        { "label": "D", "value": "next_week", "text": "Next Week" },
+        { "label": "E", "value": "next_two_weeks", "text": "Within the Next Two Weeks" },
+        { "label": "F", "value": "this_month", "text": "Later This Month" },
+        { "label": "G", "value": "custom", "text": "Specific Date (please specify)" }
+      ],
+      "followUp": {
+        "condition": "option_selected",
+        "target": "G",
+        "prompt": "Please provide the target date or date range:"
+      }
+    },
+    {
+      "id": "q3",
+      "text": "What time of day works best for these calendar items?",
+      "type": "multiple-choice",
+      "allowMultiple": false,
+      "perProject": true,
+      "options": [
+        { "label": "A", "value": "early_morning", "text": "Early Morning (7am - 9am)" },
+        { "label": "B", "value": "mid_morning", "text": "Mid-Morning (9am - 11am)" },
+        { "label": "C", "value": "midday", "text": "Midday (11am - 1pm)" },
+        { "label": "D", "value": "afternoon", "text": "Afternoon (1pm - 4pm)" },
+        { "label": "E", "value": "late_afternoon", "text": "Late Afternoon (4pm - 6pm)" },
+        { "label": "F", "value": "flexible", "text": "Flexible / No Preference" }
+      ]
+    },
+    {
+      "id": "q4",
+      "text": "What priority level should these calendar items have?",
+      "type": "multiple-choice",
+      "allowMultiple": false,
+      "perProject": true,
+      "options": [
+        { "label": "A", "value": "critical", "text": "Critical - Must happen on this date" },
+        { "label": "B", "value": "high", "text": "High - Should happen around this time" },
+        { "label": "C", "value": "medium", "text": "Medium - Sometime in the window is fine" },
+        { "label": "D", "value": "low", "text": "Low - Whenever there's availability" }
+      ]
+    },
+    {
+      "id": "q5",
+      "text": "Are there any projects that should be removed or rescheduled from the current calendar?",
+      "type": "multiple-choice",
+      "allowMultiple": false,
+      "options": [
+        { "label": "A", "value": "none", "text": "No changes needed" },
+        { "label": "B", "value": "remove", "text": "Yes - Remove some items (please specify)" },
+        { "label": "C", "value": "reschedule", "text": "Yes - Reschedule some items (please specify)" },
+        { "label": "D", "value": "both", "text": "Yes - Both remove and reschedule items (please specify)" }
+      ],
+      "followUp": {
+        "condition": "option_not",
+        "target": "A",
+        "prompt": "Please describe what needs to be changed:"
+      }
+    }
+  ],
+  "agentTaskStatuses": {
+    "description": "Current status of tasks across all working agents. This section is presented to Brian for review during the briefing so he can assess progress and priorities.",
+    "agents": [
+      {
+        "agentId": "calendar-agent",
+        "name": "Calendar Management Agent",
+        "tasks": [
+          {
+            "taskId": "cal-001",
+            "title": "Nightly calendar setup for next day",
+            "status": "active",
+            "description": "Reviews all messages, emails, and chats to prepare next day's calendar."
+          },
+          {
+            "taskId": "cal-002",
+            "title": "Morning check-in for schedule changes",
+            "status": "active",
+            "description": "Checks for fires or urgent changes that need to be addressed in the morning."
+          }
+        ]
+      },
+      {
+        "agentId": "email-agent",
+        "name": "Email & Messages Agent",
+        "tasks": [
+          {
+            "taskId": "email-001",
+            "title": "Review and categorize incoming emails",
+            "status": "in-progress",
+            "description": "Processes incoming emails and flags items requiring follow-up."
+          },
+          {
+            "taskId": "email-002",
+            "title": "Client follow-up tracking",
+            "status": "pending",
+            "description": "Ensures all client communications from the week are followed up on."
+          }
+        ]
+      },
+      {
+        "agentId": "project-agent",
+        "name": "Project Tracking Agent",
+        "tasks": [
+          {
+            "taskId": "proj-001",
+            "title": "Monitor project milestones and deadlines",
+            "status": "active",
+            "description": "Tracks all active project milestones and alerts on upcoming deadlines."
+          },
+          {
+            "taskId": "proj-002",
+            "title": "Generate weekly project status report",
+            "status": "pending",
+            "description": "Compiles status updates from all projects into a summary report."
+          }
+        ]
+      },
+      {
+        "agentId": "client-agent",
+        "name": "Client Relations Agent",
+        "tasks": [
+          {
+            "taskId": "client-001",
+            "title": "Track client onboarding progress",
+            "status": "in-progress",
+            "description": "Monitors onboarding steps for new clients and flags overdue items."
+          },
+          {
+            "taskId": "client-002",
+            "title": "Schedule client check-in calls",
+            "status": "pending",
+            "description": "Identifies clients due for check-ins and prepares scheduling options."
+          }
+        ]
+      },
+      {
+        "agentId": "fire-response-agent",
+        "name": "Urgent Issues Agent",
+        "tasks": [
+          {
+            "taskId": "fire-001",
+            "title": "Monitor for urgent issues and escalations",
+            "status": "active",
+            "description": "Watches for critical issues that need immediate attention and routes them appropriately."
+          },
+          {
+            "taskId": "fire-002",
+            "title": "Coordinate agent response to fires",
+            "status": "idle",
+            "description": "When urgent issues arise, coordinates other agents to help address them."
+          }
+        ]
+      }
+    ],
+    "statusDefinitions": {
+      "active": "Agent is currently running this task on a recurring basis.",
+      "in-progress": "Task is actively being worked on right now.",
+      "pending": "Task is queued and will be started soon.",
+      "completed": "Task has been finished.",
+      "idle": "Task is on standby, waiting to be triggered.",
+      "blocked": "Task cannot proceed due to a dependency or issue."
+    }
+  }
+}
