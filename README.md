@@ -17,15 +17,15 @@ python3 -m http.server   # then open http://localhost:8000
 ## Repository Structure
 
 ```
-briefs/
-├── index.html                              # Briefing dashboard (open in browser)
+.                                            # Repository root
+├── index.html                               # Briefing dashboard (open in browser)
 ├── src/
-│   └── briefing.js                         # Rendering engine (vanilla JS, no frameworks)
+│   └── briefing.js                          # Rendering engine (vanilla JS, no frameworks)
 ├── briefs/
-│   ├── daily-brief.json                    # Daily Executive Brief data
-│   └── brian-calendar-quick-questions.json  # Calendar quick-question brief
+│   ├── daily-brief.json                     # Daily Executive Brief data
+│   └── brian-calendar-quick-questions.json   # Calendar quick-question brief
 ├── agents/
-│   └── hierarchy.json                      # Agent hierarchy & role definitions
+│   └── hierarchy.json                       # Agent hierarchy & role definitions
 ├── README.md
 └── LICENSE
 ```
