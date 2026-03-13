@@ -295,7 +295,7 @@ const Dashboard = {
 };
 
 // Global Functions for onclick handlers
-function refreshData() {
+function refreshData(event) {
     Dashboard.renderAgents();
     Dashboard.renderTasks();
     Dashboard.renderMail();
@@ -312,16 +312,20 @@ function refreshData() {
     });
     
     // Visual feedback
-    const btn = event.target.closest('.action-btn');
-    btn.style.transform = 'rotate(360deg)';
-    setTimeout(() => btn.style.transform = '', 500);
+    if (event && event.target) {
+        const btn = event.target.closest('.action-btn');
+        if (btn) {
+            btn.style.transform = 'rotate(360deg)';
+            setTimeout(() => btn.style.transform = '', 500);
+        }
+    }
     
     console.log('🔄 Data refreshed');
 }
 
 function openBriefing() {
     // Navigate to briefing or show modal
-    const briefingUrl = '../briefs/brian-calendar-quick-questions.json';
+    const briefingUrl = '../briefs/bryan-calendar-quick-questions.json';
     
     // For demo, we'll show an alert - in production this would open a modal or navigate
     alert('Opening Daily Briefing...\n\nThis would display the quick questions from:\n' + briefingUrl);
