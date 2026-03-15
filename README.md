@@ -22,10 +22,31 @@ A SpaceX-inspired mission control dashboard for Bryan to monitor and manage all 
 
 Open `command-center/index.html` in any modern web browser. The dashboard features:
 - Auto-refreshing data every 30 seconds
+- Real-time updates via PubNub (when keys are configured)
 - Dark SpaceX-inspired theme with cyan accent colors
 - Responsive design for desktop and mobile
 - Task filtering by status (All, Active, Pending, Urgent)
 - Quick access to Daily Briefing
+
+### PubNub Real-Time Setup
+
+The dashboard supports live data pushes via [PubNub](https://www.pubnub.com/).
+
+1. Obtain your **Publish Key** and **Subscribe Key** from the [PubNub Admin Portal](https://admin.pubnub.com).
+2. Replace the placeholder keys in `command-center/pubnub-config.js`:
+   ```js
+   publishKey:  'pub-c-your-key-here',
+   subscribeKey: 'sub-c-your-key-here',
+   ```
+3. Update the matching entries in `.vscode/settings.json` for VS Code tooling support.
+
+Once configured, the dashboard listens on the `command-center` channel for messages of the following types:
+
+| `type`        | Effect                                         |
+|---------------|------------------------------------------------|
+| `activity`    | Appends an entry to the Live Activity Feed     |
+| `metrics`     | Updates system-load and agent-efficiency bars  |
+| `task_update` | Re-renders the Active Tasks panel              |
 
 ---
 

@@ -1,0 +1,6 @@
+{
+    "pubnub.publishKey": "pub-c-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+    "pubnub.subscribeKey": "sub-c-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+    "pubnub.channel": "command-center",
+    "pubnub.userId": "bryan-command-center"
+}
