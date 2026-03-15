@@ -27,6 +27,9 @@ const Dashboard = {
         // Update datetime every second
         setInterval(() => this.updateDateTime(), 1000);
         
+        // Connect to PubNub for real-time updates
+        this.pubnub = (typeof initPubNub === 'function') ? initPubNub() : null;
+        
         console.log('🚀 Bryan\'s Command Center initialized');
     },
     
