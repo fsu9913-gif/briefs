@@ -1,0 +1,137 @@
+{
+  "brief": {
+    "id": "carb-testing-email-draft",
+    "title": "CARB Testing Outreach — Draft Email",
+    "description": "Draft email for NorCal Carb Mobile to send to customers and fleet managers about CARB-compliant carburetor testing and inspection services. Intended to be loaded into the Squarespace Email Campaigns portal.",
+    "type": "email-draft",
+    "recipient": "Bryan",
+    "version": "1.0.0",
+    "status": "draft",
+    "platform": "Squarespace Email Campaigns",
+    "lastUpdated": "2026-04-08"
+  },
+
+  "emailDraft": {
+    "campaign": {
+      "name": "CARB Testing Outreach — Spring 2026",
+      "audience": "Existing customers, fleet managers, walk-in leads from NorCal Carb Mobile contact list",
+      "sendFrom": {
+        "name": "Bryan @ NorCal Carb Mobile",
+        "email": "[YOUR_BUSINESS_EMAIL@norcalcarbmobile.com]"
+      },
+      "replyTo": "[YOUR_REPLY_EMAIL@norcalcarbmobile.com]"
+    },
+
+    "recipients": {
+      "note": "Fill in the email addresses below from the Notion contact database before uploading to Squarespace.",
+      "contacts": [
+        {
+          "id": "contact-001",
+          "name": "[Contact Name 1]",
+          "email": "[email@example.com]",
+          "type": "fleet_manager",
+          "notes": ""
+        },
+        {
+          "id": "contact-002",
+          "name": "[Contact Name 2]",
+          "email": "[email@example.com]",
+          "type": "existing_customer",
+          "notes": ""
+        },
+        {
+          "id": "contact-003",
+          "name": "[Contact Name 3]",
+          "email": "[email@example.com]",
+          "type": "fleet_manager",
+          "notes": ""
+        },
+        {
+          "id": "contact-004",
+          "name": "[Contact Name 4]",
+          "email": "[email@example.com]",
+          "type": "existing_customer",
+          "notes": ""
+        },
+        {
+          "id": "contact-005",
+          "name": "[Contact Name 5]",
+          "email": "[email@example.com]",
+          "type": "lead",
+          "notes": ""
+        }
+      ],
+      "instructions": "Export the full contact list from the Notion database and paste emails into the fields above, then import into Squarespace Contacts or paste directly into the Squarespace campaign audience."
+    },
+
+    "content": {
+      "subjectLine": "Is Your Carburetor CARB-Compliant? We Come to You.",
+      "previewText": "Fast, mobile CARB-compliant carburetor testing — we come to your fleet or driveway.",
+
+      "bodyHTML": "<p>Hi [First Name],</p>\n\n<p>With California Air Resources Board (CARB) emissions standards tighter than ever, keeping your carburetor in compliance isn't just smart — it's required.</p>\n\n<p><strong>NorCal Carb Mobile brings certified CARB testing directly to you.</strong> No tow truck. No waiting. We inspect, test, and get your carb back in spec — on-site, at your fleet yard or driveway.</p>\n\n<h3>What's Included in Our CARB Testing Service:</h3>\n<ul>\n  <li>✅ Full carburetor inspection and diagnostics</li>\n  <li>✅ Emissions performance testing to CARB standards</li>\n  <li>✅ Rebuild or recalibration if out of spec (quoted on-site)</li>\n  <li>✅ Documentation for your records</li>\n  <li>✅ Mobile service — we come to you in the Sacramento / Stockton / Modesto area</li>\n</ul>\n\n<p><strong>Fleet managers:</strong> Ask about our bulk fleet testing rates. We can schedule multiple vehicles in a single visit.</p>\n\n<p style=\"text-align: center; margin: 32px 0;\">\n  <a href=\"https://norcalcarbmobile.com\" style=\"background-color: #2e7d32; color: white; padding: 14px 28px; text-decoration: none; border-radius: 4px; font-weight: bold;\">Book a CARB Test Now</a>\n</p>\n\n<p>Questions? Just reply to this email or call us directly — we're happy to talk through your situation before you book.</p>\n\n<p>Thanks,<br/>\n<strong>Bryan</strong><br/>\nNorCal Carb Mobile<br/>\n📍 Serving Sacramento, Stockton & Modesto<br/>\n🌐 <a href=\"https://norcalcarbmobile.com\">norcalcarbmobile.com</a></p>",
+
+      "bodyPlainText": "Hi [First Name],\n\nWith California Air Resources Board (CARB) emissions standards tighter than ever, keeping your carburetor in compliance isn't just smart — it's required.\n\nNorCal Carb Mobile brings certified CARB testing directly to you. No tow truck. No waiting. We inspect, test, and get your carb back in spec — on-site, at your fleet yard or driveway.\n\nWhat's Included in Our CARB Testing Service:\n- Full carburetor inspection and diagnostics\n- Emissions performance testing to CARB standards\n- Rebuild or recalibration if out of spec (quoted on-site)\n- Documentation for your records\n- Mobile service — we come to you in the Sacramento / Stockton / Modesto area\n\nFleet managers: Ask about our bulk fleet testing rates. We can schedule multiple vehicles in a single visit.\n\nBook your CARB test: https://norcalcarbmobile.com\n\nQuestions? Just reply to this email or call us — we're happy to talk through your situation before you book.\n\nThanks,\nBryan\nNorCal Carb Mobile\nServing Sacramento, Stockton & Modesto\nhttps://norcalcarbmobile.com"
+    }
+  },
+
+  "squarespaceInstructions": {
+    "steps": [
+      {
+        "step": 1,
+        "action": "Log in to Squarespace",
+        "detail": "Go to your Squarespace dashboard at squarespace.com and sign in."
+      },
+      {
+        "step": 2,
+        "action": "Open Email Campaigns",
+        "detail": "In the left sidebar, click 'Marketing' → 'Email Campaigns'."
+      },
+      {
+        "step": 3,
+        "action": "Create a New Campaign",
+        "detail": "Click '+ New Campaign'. Choose a layout — a simple one-column layout works well for this message."
+      },
+      {
+        "step": 4,
+        "action": "Set Subject and Sender",
+        "detail": "Subject: 'Is Your Carburetor CARB-Compliant? We Come to You.' — Preview text: 'Fast, mobile CARB-compliant carburetor testing — we come to your fleet or driveway.'"
+      },
+      {
+        "step": 5,
+        "action": "Paste Email Body",
+        "detail": "Copy the HTML from 'bodyHTML' above into the email editor, or use the plain text version for a simpler look."
+      },
+      {
+        "step": 6,
+        "action": "Add Recipients",
+        "detail": "Upload your contact CSV or paste emails from the Notion database into the audience/mailing list field. Fill in the 'contacts' section above first."
+      },
+      {
+        "step": 7,
+        "action": "Send a Test Email",
+        "detail": "Send a test to your own email address to review formatting before the full send."
+      },
+      {
+        "step": 8,
+        "action": "Schedule or Send",
+        "detail": "Choose 'Send Now' or pick a send time. Recommended: Tuesday or Wednesday morning, 8–10 AM for best open rates."
+      }
+    ]
+  },
+
+  "alternativeVersions": {
+    "subjectLineOptions": [
+      "Is Your Carburetor CARB-Compliant? We Come to You.",
+      "Mobile CARB Testing — No Tow Truck Needed",
+      "NorCal Carb Mobile: CARB-Certified Testing at Your Door",
+      "Fleet Managers: CARB Testing for Your Whole Yard — One Visit",
+      "Don't Fail Your Smog Check — Book a CARB Carb Test Today"
+    ],
+    "ctaOptions": [
+      "Book a CARB Test Now",
+      "Schedule My Test",
+      "Get a Free Quote",
+      "Contact Us Today"
+    ]
+  }
+}
