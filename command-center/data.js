@@ -220,6 +220,17 @@ const CommandCenterData = {
             priority: "medium",
             dueDate: "Today, 7:00 PM",
             progress: 30
+        },
+        {
+            id: "task-011",
+            title: "CARB Testing Email Campaign — Fill Contacts & Send",
+            description: "Fill in recipient emails from Notion database, load draft into Squarespace Email Campaigns, test-send, and schedule for deployment. Draft brief: briefs/carb-testing-email-draft.json",
+            agent: "email-agent",
+            agentName: "Email Agent",
+            status: "pending",
+            priority: "high",
+            dueDate: "This Week",
+            progress: 10
         }
     ],
 
@@ -290,6 +301,17 @@ const CommandCenterData = {
             unread: false,
             priority: "high",
             category: "alert"
+        },
+        {
+            id: "mail-007",
+            from: "Bryan (Draft — Action Required)",
+            email: "[YOUR_BUSINESS_EMAIL@norcalcarbmobile.com]",
+            subject: "📧 DRAFT: CARB Testing Outreach — Fill Emails & Send via Squarespace",
+            preview: "Draft ready: 'Is Your Carburetor CARB-Compliant? We Come to You.' — Fill in recipient emails from Notion DB, then load into Squarespace Email Campaigns. See briefs/carb-testing-email-draft.json for full draft + instructions.",
+            time: "Just now",
+            unread: true,
+            priority: "high",
+            category: "action-required"
         }
     ],
 
@@ -412,6 +434,13 @@ const CommandCenterData = {
             icon: "check",
             text: "<strong>Calendar Agent</strong> completed daily schedule optimization",
             time: "2 min ago"
+        },
+        {
+            id: "act-000",
+            type: "email",
+            icon: "mail",
+            text: "<strong>Email Agent</strong> prepared CARB Testing email draft — action required: fill contacts &amp; send via Squarespace",
+            time: "Just now"
         },
         {
             id: "act-002",
