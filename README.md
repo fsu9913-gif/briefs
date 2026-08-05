@@ -54,6 +54,11 @@ Active outreach campaign for 22 diesel fleet leads in the Hayward/San Leandro ar
 #### Workflow
 
 1. **Dedupe first** — Cross-reference against Master CRM sheet before contacting.
-2. **SMS at 10:30 AM (5/23)** — Send personalized SMS using the tap-to-call page or drafts in the brief.
-3. **Email follow-up** — Send personalized emails from `bryan@norcalcarbmobile.com`.
+2. **SMS** — Bryan sends directly (knows most contacts personally). Use tap-to-call page for any new contacts.
+3. **Email via Make.com** — Automated via Make.com (10,000 credits available, uses ~88):
+   - Upload `leads/hayward-san-leandro-email-outreach.csv` to Google Sheets as "Email_Outreach" tab
+   - Fill in the `Email` column for each lead
+   - Import `leads/make-com-email-blueprint.json` into Make.com
+   - Configure SMTP connection for `bryan@norcalcarbmobile.com`
+   - Test with 1 row, then run all
 4. **Track in Gumption** — Add all leads to [gumption.manus.space](https://gumption.manus.space) under Cold Calls.
