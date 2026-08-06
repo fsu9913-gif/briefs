@@ -1,0 +1,55 @@
+{
+  "name": "NorCal CARB — Hayward Lead SMS Batch (Sat 10:30 AM PT)",
+  "description": "Import into Make.com. Reads leads/Leads_2026-05-22.csv, sends staggered SMS via Twilio at scheduled time.",
+  "schedule": {
+    "sendAtUnix": 1779557400,
+    "sendAtLocal": "2026-05-23T10:30:00",
+    "timezone": "America/Los_Angeles",
+    "label": "Saturday May 23, 2026 10:30 AM Pacific"
+  },
+  "settings": {
+    "staggerSecondsBetweenMessages": 30,
+    "fromNumberEnv": "TWILIO_FROM_NUMBER",
+    "messagingServiceSidEnv": "TWILIO_MESSAGING_SERVICE_SID",
+    "csvPath": "leads/Leads_2026-05-22.csv",
+    "briefPath": "briefs/hayward-leads-2026-05-22-outreach.json"
+  },
+  "scenarioModules": [
+    {
+      "module": "Schedule",
+      "note": "One-shot trigger at 2026-05-23 10:30 America/Los_Angeles — or use existing evening 8 PM / morning 6 AM blueprint with this CSV as input"
+    },
+    {
+      "module": "Google Sheets / CSV",
+      "action": "Parse rows from Leads_2026-05-22.csv",
+      "sort": "tier ASC (HOT first), score DESC"
+    },
+    {
+      "module": "Iterator",
+      "action": "For each row with phone_e164"
+    },
+    {
+      "module": "Twilio",
+      "action": "Create Message",
+      "parameters": {
+        "To": "{{phone_e164}}",
+        "Body": "{{sms_body from brief or column}}",
+        "ScheduleType": "fixed",
+        "SendAt": 1779557400,
+        "StatusCallback": "{{optional webhook for delivery tracking}}"
+      }
+    },
+    {
+      "module": "Sleep",
+      "seconds": 30,
+      "note": "Between sends to reduce burst rate limits"
+    },
+    {
+      "module": "Slack",
+      "action": "Send DM to Bryan",
+      "message": "Hayward SMS batch complete: {{count}} sent, scheduled 10:30 AM PT"
+    }
+  ],
+  "smsBodyColumnSuggestion": "Add column sms_body to CSV or map from brief JSON by lead_id",
+  "complianceReminder": "Ensure A2P 10DLC / opt-in policy for cold SMS; transactional fleet outreach may still require consent — confirm with Twilio compliance toolkit."
+}

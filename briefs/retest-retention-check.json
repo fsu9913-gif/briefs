@@ -1,0 +1,187 @@
+{
+  "brief": {
+    "id": "retest-retention-check",
+    "title": "Monthly Retest Retention Check — NorCal CARB Mobile",
+    "description": "Skill / workflow spec for the recurring monthly retest retention engine. Pulls Master CRM data, calculates the next CARB Clean Truck Check (CTC) due date for every existing customer, buckets them by urgency, and produces a prioritized outreach list. Runs on the 23rd of every month (calendar reminder 'Run monthly retest check').",
+    "type": "recurring-workflow",
+    "recipient": "Bryan",
+    "version": "1.0.0",
+    "owner": "NorCal CARB Mobile",
+    "cadence": {
+      "frequency": "monthly",
+      "dayOfMonth": 23,
+      "calendarEvent": "Monthly Retest Retention Check - Run Skill",
+      "triggerPhrase": "Run monthly retest check"
+    },
+    "revenueGoal": {
+      "retentionTarget": 0.9,
+      "customerValueRange": { "low": 150, "high": 500, "unit": "USD/year" },
+      "projectedAnnualRecurringRange": { "low": 67500, "high": 225000, "unit": "USD" },
+      "notes": "Target 90%+ retention on existing CARB CTC customers. At 500 customers the band is $67.5K–$225K/year recurring."
+    }
+  },
+
+  "dataSources": {
+    "masterCrm": {
+      "name": "Master CRM (Google Sheet)",
+      "spreadsheetId": "1TdNnf7eLaPNN3anaBGpNdjo_unK04zWwZJ859ZDvIO4",
+      "exportFormat": "CSV",
+      "requiredColumns": [
+        "customer_id",
+        "company_name",
+        "contact_name",
+        "phone",
+        "email",
+        "city",
+        "vehicle_type",
+        "vehicle_count",
+        "last_test_date",
+        "test_cadence_months",
+        "preferred_channel",
+        "last_outcome",
+        "notes"
+      ],
+      "fieldNotes": {
+        "last_test_date": "ISO date (YYYY-MM-DD) of the most recent CARB CTC test performed by NorCal CARB Mobile.",
+        "test_cadence_months": "Integer months between required retests. Default 12. Use 6 for high-mileage fleets, 24 for low-use exempt categories.",
+        "preferred_channel": "One of: call, sms, email. Defaults to call for HOT/URGENT, email for WARM/EARLY.",
+        "last_outcome": "Outcome of last visit: passed | failed | rescheduled | no_show."
+      },
+      "exportInstructions": "Export the 'Customers' tab to CSV and drop it at leads/retest-customers.csv before running the script. A sample with the required schema lives at leads/retest-customers-sample.csv."
+    }
+  },
+
+  "priorityBuckets": [
+    {
+      "id": "urgent",
+      "label": "🔴 URGENT",
+      "daysUntilDueRange": { "min": -9999, "max": 7 },
+      "description": "Already overdue or due within 7 days. Call immediately.",
+      "actions": ["create_call_task", "personal_phone_call_today"],
+      "channel": "call"
+    },
+    {
+      "id": "hot",
+      "label": "🟠 HOT",
+      "daysUntilDueRange": { "min": 8, "max": 30 },
+      "description": "Due within 8–30 days. Call this week.",
+      "actions": ["create_call_task", "phone_call_this_week"],
+      "channel": "call"
+    },
+    {
+      "id": "warm",
+      "label": "🟡 WARM",
+      "daysUntilDueRange": { "min": 31, "max": 60 },
+      "description": "Due within 31–60 days. Email + follow-up call.",
+      "actions": ["email_blast", "follow_up_call"],
+      "channel": "email"
+    },
+    {
+      "id": "early",
+      "label": "🟢 EARLY",
+      "daysUntilDueRange": { "min": 61, "max": 90 },
+      "description": "Due within 61–90 days. Email reminder only.",
+      "actions": ["email_reminder"],
+      "channel": "email"
+    },
+    {
+      "id": "out_of_window",
+      "label": "⚪ OUT OF WINDOW",
+      "daysUntilDueRange": { "min": 91, "max": 9999 },
+      "description": "More than 90 days out. No action this cycle; recheck next month.",
+      "actions": [],
+      "channel": null
+    }
+  ],
+
+  "workflow": {
+    "trigger": "Calendar event 'Monthly Retest Retention Check - Run Skill' fires on the 23rd of every month at 10:00 PM PT.",
+    "steps": [
+      {
+        "n": 1,
+        "title": "Export Master CRM",
+        "detail": "Open the Master CRM Google Sheet, File → Download → Comma-separated values, save as leads/retest-customers.csv."
+      },
+      {
+        "n": 2,
+        "title": "Run the retest engine",
+        "detail": "From repo root: python3 leads/retest_retention_check.py --input leads/retest-customers.csv --as-of $(date +%F)"
+      },
+      {
+        "n": 3,
+        "title": "Review the priority list",
+        "detail": "Open docs/retest-retention-YYYY-MM.md (auto-generated). Confirm bucket counts. Spot-check a few entries against the CRM."
+      },
+      {
+        "n": 4,
+        "title": "Create call tasks for URGENT + HOT",
+        "detail": "For each customer in 🔴 URGENT and 🟠 HOT, log a call task in Gumption → Cold Calls (or your task tracker). Call same day for URGENT, within 5 business days for HOT."
+      },
+      {
+        "n": 5,
+        "title": "Send the email blast to WARM + EARLY",
+        "detail": "Copy the auto-generated email body from the monthly report into Squarespace Email Campaigns. Audience = customers in WARM + EARLY buckets. Schedule for the next business morning at 9:00 AM PT."
+      },
+      {
+        "n": 6,
+        "title": "Update CRM with contact status",
+        "detail": "After each call/email, mark contact_status, contact_date, and next_action in the Master CRM. Keep the sheet as the source of truth."
+      },
+      {
+        "n": 7,
+        "title": "Schedule confirmed appointments",
+        "detail": "For every customer who confirms a retest, add the appointment to Bryan's calendar and send a calendar invite to the customer's email."
+      },
+      {
+        "n": 8,
+        "title": "Send calendar invites",
+        "detail": "Use Google Calendar 'Add guests' to send the .ics invite. Include the address, expected duration (30 min mobile OBD + smoke opacity), and Bryan's cell (916-890-4427) in the description."
+      }
+    ]
+  },
+
+  "outputArtifacts": [
+    {
+      "path": "docs/retest-retention-YYYY-MM.md",
+      "purpose": "Human-readable monthly report: bucket counts, prioritized lead lists, ready-to-send email copy."
+    },
+    {
+      "path": "briefs/retest-retention-YYYY-MM.json",
+      "purpose": "Machine-readable monthly snapshot consumed by the dashboard and any downstream automations."
+    }
+  ],
+
+  "emailTemplates": {
+    "warm": {
+      "subject": "Your CARB Clean Truck Check is due in {daysUntilDue} days — we'll come to you",
+      "body": "Hi {contactName},\n\nQuick reminder from Bryan at NorCal CARB Mobile — our records show your last Clean Truck Check on {lastTestDate} for {vehicleType} ({vehicleCount} vehicle{vehiclePlural}) puts your next CARB compliance check due around {nextDueDate} (~{daysUntilDue} days out).\n\nLet's get ahead of it before the State does. We'll come to your yard, run mobile OBD + OVI smoke opacity, and have you back in service in 30 minutes per truck. 24/7, 363 days a year, no appointment minimums.\n\nReply with a window that works, or call/text me at 916-890-4427 and I'll lock it in.\n\nBryan\nNorCal CARB Mobile\n916-890-4427"
+    },
+    "early": {
+      "subject": "Heads up: CARB retest coming up in ~{daysUntilDue} days",
+      "body": "Hi {contactName},\n\nNo action needed today — just a friendly heads-up from NorCal CARB Mobile. Your next Clean Truck Check on {vehicleType} ({vehicleCount} vehicle{vehiclePlural}) is due around {nextDueDate}, roughly {daysUntilDue} days from now.\n\nWhen you're ready to book, reply here or text 916-890-4427. We'll come to you — mobile OBD + smoke opacity, same-day turnaround.\n\nBryan\nNorCal CARB Mobile"
+    }
+  },
+
+  "callScripts": {
+    "urgent": "Hey {contactName}, Bryan with NorCal CARB Mobile. Looking at our records your CARB Clean Truck Check on {vehicleType} is {daysOverdueOrDueToday} — we want to get you back in compliance before the State flags it. I can be at your yard {nextAvailableSlot} and knock it out in 30 minutes per truck, mobile OBD + smoke opacity. Does {nextAvailableSlot} work, or is there a better window?",
+    "hot": "Hey {contactName}, Bryan with NorCal CARB Mobile. Your last CTC was {lastTestDate} so your next one's due {nextDueDate}. We're booking up quick this month — want me to grab a spot now? We come to you, 30 min per truck."
+  },
+
+  "kpis": {
+    "perRun": [
+      "customers_evaluated",
+      "urgent_count",
+      "hot_count",
+      "warm_count",
+      "early_count",
+      "calls_logged",
+      "emails_sent",
+      "appointments_scheduled"
+    ],
+    "rolling12mo": [
+      "retention_rate",
+      "avg_days_to_recontact",
+      "recovered_lapsed_customers"
+    ]
+  }
+}

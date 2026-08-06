@@ -1,0 +1,23 @@
+Company,Phone,Priority,Stage,City,Category,Lead Score,Next Action,Scheduled SMS,Source,Notes
+ArborTech Inc.,510-871-8788,HOT,New,Hayward,Tree Service,85,Cold call + SMS Sat 10:30 AM,2026-05-23 10:30 PT,Hayward batch 2026-05-22,1310 Ruus Ln — verify Master CRM dedupe first
+Saunders Tree Service Inc,925-200-9057,HOT,New,Hayward,Tree Service,80,Cold call + SMS Sat 10:30 AM,2026-05-23 10:30 PT,Hayward batch 2026-05-22,22844 Alice St
+Castillo Tree Service Inc,510-792-6590,HOT,New,Hayward,Tree Service,80,Cold call + SMS Sat 10:30 AM,2026-05-23 10:30 PT,Hayward batch 2026-05-22,25798 Franklin Ave
+Graham Tree Services Inc,510-383-9585,HOT,New,San Leandro,Tree Service,80,Cold call + SMS Sat 10:30 AM,2026-05-23 10:30 PT,Hayward batch 2026-05-22,520 Doolittle Dr
+Boyett Concrete Inc,510-264-9100,HOT,New,Hayward,Concrete,75,Cold call + SMS Sat 10:30 AM,2026-05-23 10:30 PT,Hayward batch 2026-05-22,2404 Tripaldi Way
+"LS Trucking, Inc.",510-266-5213,HOT,New,Hayward,Trucking,75,Cold call + SMS Sat 10:30 AM,2026-05-23 10:30 PT,Hayward batch 2026-05-22,Diesel fleet priority
+Daylight Transport,800-468-9999,HOT,New,Hayward,Trucking/LTL,70,Cold call + SMS Sat 10:30 AM,2026-05-23 10:30 PT,Hayward batch 2026-05-22,Confirm local yard contact
+Baystar Trans Inc,510-586-9300,WARM,New,Hayward,Trucking,68,Cold call + SMS Sat 10:30 AM,2026-05-23 10:30 PT,Hayward batch 2026-05-22,
+Rangel Concrete,510-292-6207,WARM,New,San Lorenzo,Concrete,65,Cold call + SMS Sat 10:30 AM,2026-05-23 10:30 PT,Hayward batch 2026-05-22,
+Mag Trucking,510-782-8801,WARM,New,Hayward,Trucking,65,Cold call + SMS Sat 10:30 AM,2026-05-23 10:30 PT,Hayward batch 2026-05-22,
+Cato's Paving,510-397-2677,WARM,New,Hayward,Asphalt/Paving,65,Cold call + SMS Sat 10:30 AM,2026-05-23 10:30 PT,Hayward batch 2026-05-22,
+Estes Express Lines,510-635-0165,WARM,New,San Leandro,LTL Freight,65,Cold call + SMS Sat 10:30 AM,2026-05-23 10:30 PT,Hayward batch 2026-05-22,
+Saia LTL Freight,510-347-6890,WARM,New,San Leandro,LTL Freight,65,Cold call + SMS Sat 10:30 AM,2026-05-23 10:30 PT,Hayward batch 2026-05-22,
+DHE Dependable Highway Express,510-357-2223,WARM,New,San Leandro,LTL,65,Cold call + SMS Sat 10:30 AM,2026-05-23 10:30 PT,Hayward batch 2026-05-22,
+Maguire Tree Care,650-844-2046,WARM,New,San Carlos,Tree Service,65,Cold call after HOT cluster,2026-05-23 10:30 PT,Hayward batch 2026-05-22,
+10-4 Tow Of San Leandro,510-633-2727,WARM,New,San Leandro,HD Towing,63,Cold call + SMS Sat 10:30 AM,2026-05-23 10:30 PT,Hayward batch 2026-05-22,
+Roadstar Trucking Inc,510-487-2404,WARM,New,Hayward,Trucking,60,Cold call + SMS Sat 10:30 AM,2026-05-23 10:30 PT,Hayward batch 2026-05-22,
+Munoz Transport Service,510-385-9206,WARM,New,Hayward,Trucking,60,Cold call + SMS Sat 10:30 AM,2026-05-23 10:30 PT,Hayward batch 2026-05-22,
+American Asphalt R&R,510-723-0280,WARM,New,Hayward,Asphalt,60,Cold call + SMS Sat 10:30 AM,2026-05-23 10:30 PT,Hayward batch 2026-05-22,
+Rose Paving,510-770-1150,WARM,New,Hayward,Asphalt,60,Cold call + SMS Sat 10:30 AM,2026-05-23 10:30 PT,Hayward batch 2026-05-22,
+Malcolm Drilling,510-780-9181,WARM,New,Hayward,Drilling/Excavation,60,Cold call + SMS Sat 10:30 AM,2026-05-23 10:30 PT,Hayward batch 2026-05-22,
+GreenWaste Hayward Transfer,510-606-1548,WARM,New,Hayward,Waste,60,Cold call + SMS Sat 10:30 AM,2026-05-23 10:30 PT,Hayward batch 2026-05-22,

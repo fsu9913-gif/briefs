@@ -1,0 +1,90 @@
+{
+  "brief": "Cold Call Campaign — Hayward / San Leandro Fleet Outreach",
+  "date": "2026-05-22",
+  "generatedFor": "bryan@norcalcarbmobile.com",
+  "scheduledSendTime": "2026-05-23T10:30:00",
+  "warning": "⚠️ NOT yet deduped against Master CRM (Sheet ID: 1TdNnf7eLaPNN3anaBGpNdjo_unK04zWwZJ859ZDvIO4). Verify in Sheet before calling — some may already be customers.",
+
+  "stats": {
+    "hot": 7,
+    "warm": 15,
+    "cool": 0,
+    "total": 22
+  },
+
+  "smsDraft": {
+    "template": "Hey [Name], Bryan @ NorCal CARB Mobile. In [City] tomorrow doing Clean Truck Checks — if you've got diesels 14k+ lbs I can knock out your CARB compliance same trip. Mobile OBD + smoke opacity, 24/7. Call me before the State calls you. 📲 [Your Number]",
+    "charCount": 210,
+    "notes": "Under 160 chars sends as 1 SMS segment. This is ~2 segments. Trim if needed.",
+    "shortened": "Hey [Name], Bryan w/ NorCal CARB Mobile. In [City] tomorrow — got diesel 14k+ lbs? I'll do your CARB check same trip. 24/7, mobile. Call me: [#]",
+    "perLead": [
+      { "id": "lead-001", "name": "ArborTech Inc.", "city": "Hayward", "phone": "510-871-8788", "sms": "Hey ArborTech, Bryan @ NorCal CARB Mobile. In Hayward tomorrow doing Clean Truck Checks — if you've got diesels 14k+ lbs I can knock out your CARB compliance same trip. Mobile OBD + smoke opacity, 24/7. Call me before the State calls you. 📲 [Your Number]" },
+      { "id": "lead-002", "name": "Saunders Tree Service Inc", "city": "Hayward", "phone": "925-200-9057", "sms": "Hey Saunders Tree, Bryan @ NorCal CARB Mobile. In Hayward tomorrow doing Clean Truck Checks — if you've got diesels 14k+ lbs I can knock out your CARB compliance same trip. Mobile OBD + smoke opacity, 24/7. Call me before the State calls you. 📲 [Your Number]" },
+      { "id": "lead-003", "name": "Castillo Tree Service Inc", "city": "Hayward", "phone": "510-792-6590", "sms": "Hey Castillo Tree, Bryan @ NorCal CARB Mobile. In Hayward tomorrow doing Clean Truck Checks — if you've got diesels 14k+ lbs I can knock out your CARB compliance same trip. Mobile OBD + smoke opacity, 24/7. Call me before the State calls you. 📲 [Your Number]" },
+      { "id": "lead-004", "name": "Graham Tree Services Inc", "city": "San Leandro", "phone": "510-383-9585", "sms": "Hey Graham Tree, Bryan @ NorCal CARB Mobile. In San Leandro tomorrow doing Clean Truck Checks — if you've got diesels 14k+ lbs I can knock out your CARB compliance same trip. Mobile OBD + smoke opacity, 24/7. Call me before the State calls you. 📲 [Your Number]" },
+      { "id": "lead-005", "name": "Boyett Concrete Inc", "city": "Hayward", "phone": "510-264-9100", "sms": "Hey Boyett Concrete, Bryan @ NorCal CARB Mobile. In Hayward tomorrow doing Clean Truck Checks — if you've got diesels 14k+ lbs I can knock out your CARB compliance same trip. Mobile OBD + smoke opacity, 24/7. Call me before the State calls you. 📲 [Your Number]" },
+      { "id": "lead-006", "name": "LS Trucking, Inc.", "city": "Hayward", "phone": "510-266-5213", "sms": "Hey LS Trucking, Bryan @ NorCal CARB Mobile. In Hayward tomorrow doing Clean Truck Checks — if you've got diesels 14k+ lbs I can knock out your CARB compliance same trip. Mobile OBD + smoke opacity, 24/7. Call me before the State calls you. 📲 [Your Number]" },
+      { "id": "lead-007", "name": "Daylight Transport", "city": "Hayward", "phone": "800-468-9999", "sms": "Hey Daylight Transport, Bryan @ NorCal CARB Mobile. In Hayward tomorrow doing Clean Truck Checks — if you've got diesels 14k+ lbs I can knock out your CARB compliance same trip. Mobile OBD + smoke opacity, 24/7. Call me before the State calls you. 📲 [Your Number]" },
+      { "id": "lead-008", "name": "Baystar Trans Inc", "city": "Hayward", "phone": "510-586-9300", "sms": "Hey Baystar Trans, Bryan @ NorCal CARB Mobile. In Hayward tomorrow doing Clean Truck Checks — if you've got diesels 14k+ lbs I can knock out your CARB compliance same trip. Mobile OBD + smoke opacity, 24/7. Call me before the State calls you. 📲 [Your Number]" },
+      { "id": "lead-009", "name": "Rangel Concrete", "city": "San Lorenzo", "phone": "510-292-6207", "sms": "Hey Rangel Concrete, Bryan @ NorCal CARB Mobile. In San Lorenzo/Hayward area tomorrow doing Clean Truck Checks — if you've got diesels 14k+ lbs I can knock out your CARB compliance same trip. Mobile OBD + smoke opacity, 24/7. Call me before the State calls you. 📲 [Your Number]" },
+      { "id": "lead-010", "name": "Mag Trucking", "city": "Hayward", "phone": "510-782-8801", "sms": "Hey Mag Trucking, Bryan @ NorCal CARB Mobile. In Hayward tomorrow doing Clean Truck Checks — if you've got diesels 14k+ lbs I can knock out your CARB compliance same trip. Mobile OBD + smoke opacity, 24/7. Call me before the State calls you. 📲 [Your Number]" },
+      { "id": "lead-011", "name": "Cato's Paving", "city": "Hayward", "phone": "510-397-2677", "sms": "Hey Cato's Paving, Bryan @ NorCal CARB Mobile. In Hayward tomorrow doing Clean Truck Checks — if you've got diesels 14k+ lbs I can knock out your CARB compliance same trip. Mobile OBD + smoke opacity, 24/7. Call me before the State calls you. 📲 [Your Number]" },
+      { "id": "lead-012", "name": "Estes Express Lines", "city": "San Leandro", "phone": "510-635-0165", "sms": "Hey Estes Express, Bryan @ NorCal CARB Mobile. In San Leandro tomorrow doing Clean Truck Checks — if you've got diesels 14k+ lbs I can knock out your CARB compliance same trip. Mobile OBD + smoke opacity, 24/7. Call me before the State calls you. 📲 [Your Number]" },
+      { "id": "lead-013", "name": "Saia LTL Freight", "city": "San Leandro", "phone": "510-347-6890", "sms": "Hey Saia LTL, Bryan @ NorCal CARB Mobile. In San Leandro tomorrow doing Clean Truck Checks — if you've got diesels 14k+ lbs I can knock out your CARB compliance same trip. Mobile OBD + smoke opacity, 24/7. Call me before the State calls you. 📲 [Your Number]" },
+      { "id": "lead-014", "name": "DHE Dependable Highway Express", "city": "San Leandro", "phone": "510-357-2223", "sms": "Hey DHE, Bryan @ NorCal CARB Mobile. In San Leandro tomorrow doing Clean Truck Checks — if you've got diesels 14k+ lbs I can knock out your CARB compliance same trip. Mobile OBD + smoke opacity, 24/7. Call me before the State calls you. 📲 [Your Number]" },
+      { "id": "lead-015", "name": "Maguire Tree Care", "city": "San Carlos", "phone": "650-844-2046", "sms": "Hey Maguire Tree, Bryan @ NorCal CARB Mobile. Working the South Bay tomorrow doing Clean Truck Checks — if you've got diesels 14k+ lbs I can knock out your CARB compliance same trip. Mobile OBD + smoke opacity, 24/7. Call me before the State calls you. 📲 [Your Number]" },
+      { "id": "lead-016", "name": "10-4 Tow Of San Leandro", "city": "San Leandro", "phone": "510-633-2727", "sms": "Hey 10-4 Tow, Bryan @ NorCal CARB Mobile. In San Leandro tomorrow doing Clean Truck Checks — if you've got heavy diesel equipment 14k+ lbs I can knock out your CARB compliance same trip. Mobile OBD + smoke opacity, 24/7. 📲 [Your Number]" },
+      { "id": "lead-017", "name": "Roadstar Trucking Inc", "city": "Hayward", "phone": "510-487-2404", "sms": "Hey Roadstar Trucking, Bryan @ NorCal CARB Mobile. In Hayward tomorrow doing Clean Truck Checks — if you've got diesels 14k+ lbs I can knock out your CARB compliance same trip. Mobile OBD + smoke opacity, 24/7. Call me before the State calls you. 📲 [Your Number]" },
+      { "id": "lead-018", "name": "Munoz Transport Service", "city": "Hayward", "phone": "510-385-9206", "sms": "Hey Munoz Transport, Bryan @ NorCal CARB Mobile. In Hayward tomorrow doing Clean Truck Checks — if you've got diesels 14k+ lbs I can knock out your CARB compliance same trip. Mobile OBD + smoke opacity, 24/7. Call me before the State calls you. 📲 [Your Number]" },
+      { "id": "lead-019", "name": "American Asphalt R&R", "city": "Hayward", "phone": "510-723-0280", "sms": "Hey American Asphalt, Bryan @ NorCal CARB Mobile. In Hayward tomorrow doing Clean Truck Checks — if you've got diesels 14k+ lbs I can knock out your CARB compliance same trip. Mobile OBD + smoke opacity, 24/7. Call me before the State calls you. 📲 [Your Number]" },
+      { "id": "lead-020", "name": "Rose Paving", "city": "Hayward", "phone": "510-770-1150", "sms": "Hey Rose Paving, Bryan @ NorCal CARB Mobile. In Hayward tomorrow doing Clean Truck Checks — if you've got diesels 14k+ lbs I can knock out your CARB compliance same trip. Mobile OBD + smoke opacity, 24/7. Call me before the State calls you. 📲 [Your Number]" },
+      { "id": "lead-021", "name": "Malcolm Drilling", "city": "Hayward", "phone": "510-780-9181", "sms": "Hey Malcolm Drilling, Bryan @ NorCal CARB Mobile. In Hayward tomorrow doing Clean Truck Checks — if you've got diesels 14k+ lbs I can knock out your CARB compliance same trip. Mobile OBD + smoke opacity, 24/7. Call me before the State calls you. 📲 [Your Number]" },
+      { "id": "lead-022", "name": "GreenWaste Hayward Transfer", "city": "Hayward", "phone": "510-606-1548", "sms": "Hey GreenWaste Hayward, Bryan @ NorCal CARB Mobile. In Hayward tomorrow doing Clean Truck Checks — if you've got diesels 14k+ lbs I can knock out your CARB compliance same trip. Mobile OBD + smoke opacity, 24/7. Call me before the State calls you. 📲 [Your Number]" }
+    ]
+  },
+
+  "emailDraft": {
+    "from": "bryan@norcalcarbmobile.com",
+    "subjectTemplate": "Free Clean Truck Check Coming to [City] Tomorrow — [Business Name]",
+    "bodyTemplate": "Hi [First Name / Team],\n\nBryan here with NorCal CARB Mobile — we run mobile CARB compliance checks for commercial fleets across the Bay Area.\n\nWe're going to be in [City] tomorrow, and I wanted to reach out directly. If your fleet has diesel vehicles over 14,000 lbs GVWR, we can knock out your CARB compliance inspection on the same trip:\n\n✅ Mobile OBD scan\n✅ OVI smoke opacity test\n✅ No appointment needed\n✅ Available 24/7, 363 days a year\n✅ We come to YOU\n\nDon't wait for the State to show up — get ahead of it and call me direct.\n\nBryan\nNorCal CARB Mobile\n📞 [Your Phone Number]\n🌐 norcalcarbmobile.com\n\nP.S. Reply to this email or text me — I respond fast.",
+    "perLead": [
+      { "id": "lead-001", "to": "[contact email for ArborTech Inc.]", "subject": "Free Clean Truck Check Coming to Hayward Tomorrow — ArborTech Inc." },
+      { "id": "lead-002", "to": "[contact email for Saunders Tree Service Inc]", "subject": "Free Clean Truck Check Coming to Hayward Tomorrow — Saunders Tree Service" },
+      { "id": "lead-003", "to": "[contact email for Castillo Tree Service Inc]", "subject": "Free Clean Truck Check Coming to Hayward Tomorrow — Castillo Tree Service" },
+      { "id": "lead-004", "to": "[contact email for Graham Tree Services Inc]", "subject": "Free Clean Truck Check Coming to San Leandro Tomorrow — Graham Tree Services" },
+      { "id": "lead-005", "to": "[contact email for Boyett Concrete Inc]", "subject": "Free Clean Truck Check Coming to Hayward Tomorrow — Boyett Concrete" },
+      { "id": "lead-006", "to": "[contact email for LS Trucking, Inc.]", "subject": "Free Clean Truck Check Coming to Hayward Tomorrow — LS Trucking" },
+      { "id": "lead-007", "to": "[contact email for Daylight Transport]", "subject": "Free Clean Truck Check Coming to Hayward Tomorrow — Daylight Transport" },
+      { "id": "lead-008", "to": "[contact email for Baystar Trans Inc]", "subject": "Free Clean Truck Check Coming to Hayward Tomorrow — Baystar Trans" },
+      { "id": "lead-009", "to": "[contact email for Rangel Concrete]", "subject": "Free Clean Truck Check Coming to San Lorenzo/Hayward — Rangel Concrete" },
+      { "id": "lead-010", "to": "[contact email for Mag Trucking]", "subject": "Free Clean Truck Check Coming to Hayward Tomorrow — Mag Trucking" },
+      { "id": "lead-011", "to": "[contact email for Cato's Paving]", "subject": "Free Clean Truck Check Coming to Hayward Tomorrow — Cato's Paving" },
+      { "id": "lead-012", "to": "[contact email for Estes Express Lines]", "subject": "Free Clean Truck Check Coming to San Leandro Tomorrow — Estes Express" },
+      { "id": "lead-013", "to": "[contact email for Saia LTL Freight]", "subject": "Free Clean Truck Check Coming to San Leandro Tomorrow — Saia LTL" },
+      { "id": "lead-014", "to": "[contact email for DHE Dependable Highway Express]", "subject": "Free Clean Truck Check Coming to San Leandro Tomorrow — DHE" },
+      { "id": "lead-015", "to": "[contact email for Maguire Tree Care]", "subject": "Free Clean Truck Check Coming to South Bay Tomorrow — Maguire Tree Care" },
+      { "id": "lead-016", "to": "[contact email for 10-4 Tow Of San Leandro]", "subject": "Free Clean Truck Check Coming to San Leandro Tomorrow — 10-4 Tow" },
+      { "id": "lead-017", "to": "[contact email for Roadstar Trucking Inc]", "subject": "Free Clean Truck Check Coming to Hayward Tomorrow — Roadstar Trucking" },
+      { "id": "lead-018", "to": "[contact email for Munoz Transport Service]", "subject": "Free Clean Truck Check Coming to Hayward Tomorrow — Munoz Transport" },
+      { "id": "lead-019", "to": "[contact email for American Asphalt R&R]", "subject": "Free Clean Truck Check Coming to Hayward Tomorrow — American Asphalt" },
+      { "id": "lead-020", "to": "[contact email for Rose Paving]", "subject": "Free Clean Truck Check Coming to Hayward Tomorrow — Rose Paving" },
+      { "id": "lead-021", "to": "[contact email for Malcolm Drilling]", "subject": "Free Clean Truck Check Coming to Hayward Tomorrow — Malcolm Drilling" },
+      { "id": "lead-022", "to": "[contact email for GreenWaste Hayward Transfer]", "subject": "Free Clean Truck Check Coming to Hayward Tomorrow — GreenWaste Hayward" }
+    ]
+  },
+
+  "voicemailHook": "Hey [Name], Bryan with NorCal CARB Mobile. I'll be in [City] tomorrow doing Clean Truck Checks for fleets right by you. If you've got diesels over 14,000 lbs I can knock yours out same trip — mobile OBD and OVI smoke opacity, 24/7, 363 days a year. Call me before the State calls you. [Your number].",
+
+  "nextSteps": [
+    "1. Verify all 22 leads against Master CRM tab 'Leads_2026-05-14' (Sheet ID: 1TdNnf7eLaPNN3anaBGpNdjo_unK04zWwZJ859ZDvIO4) to remove existing customers.",
+    "2. Fill in contact emails for each lead in the emailDraft.perLead array above.",
+    "3. Replace all [Your Number] placeholders with Bryan's actual cell/business number.",
+    "4. SMS: Use your phone or a bulk SMS tool — send at 10:30 AM tomorrow (2026-05-23) starting with the 7 HOT leads.",
+    "5. Email: Load each personalized email into Squarespace Email Campaigns or Gmail drafts.",
+    "6. Update call status in the Cold Calls panel on the Command Center (gumption.manus.space) as you work through the list.",
+    "7. HOT call order: ArborTech → Saunders Tree → Castillo Tree → Graham Tree → Boyett Concrete → LS Trucking → Daylight Transport"
+  ],
+
+  "masterCRMSheetId": "1TdNnf7eLaPNN3anaBGpNdjo_unK04zWwZJ859ZDvIO4",
+  "masterCRMTab": "Leads_2026-05-14"
+}

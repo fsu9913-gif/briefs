@@ -50,6 +50,7 @@ Active outreach campaign for 22 diesel fleet leads in the Hayward/San Leandro ar
 - **[`briefs/hayward-leads-outreach-2026-05-22.json`](briefs/hayward-leads-outreach-2026-05-22.json)** — Full outreach brief with personalized SMS and email drafts for all 22 leads (7 HOT, 15 WARM), voicemail script, and Gumption tracking notes.
 - **[`leads/hayward-san-leandro-2026-05-22.csv`](leads/hayward-san-leandro-2026-05-22.csv)** — CSV for import into Master CRM (`Leads_2026-05-14` tab) and Gumption cold call tracker. Includes score, tier, status, and tracking columns.
 - **[`leads/hayward-san-leandro-tap-to-call.html`](leads/hayward-san-leandro-tap-to-call.html)** — Mobile-friendly HTML page. Open on your phone to tap any number to call or SMS. Pre-loaded SMS drafts, voicemail script toggle, and call counter.
+- **[`leads/lead-manager.html`](leads/lead-manager.html)** — Full lead manager: tap to SMS, call, email, or delete. Shows last test date for each lead, tracks success rate, and persists your actions in the browser.
 
 #### Workflow
 
@@ -62,3 +63,53 @@ Active outreach campaign for 22 diesel fleet leads in the Hayward/San Leandro ar
    - Configure SMTP connection for `bryan@norcalcarbmobile.com`
    - Test with 1 row, then run all
 4. **Track in Gumption** — Add all leads to [gumption.manus.space](https://gumption.manus.space) under Cold Calls.
+
+---
+
+## Monthly Retest Retention Check (NorCal CARB Mobile)
+
+A recurring monthly workflow that pulls existing NorCal CARB Mobile customers from the Master CRM, calculates each customer's next Clean Truck Check due date, buckets them by urgency (🔴 URGENT / 🟠 HOT / 🟡 WARM / 🟢 EARLY), and produces a prioritized outreach list.
+
+- **Spec:** [`briefs/retest-retention-check.json`](briefs/retest-retention-check.json)
+- **Engine:** [`leads/retest_retention_check.py`](leads/retest_retention_check.py) (Python 3, stdlib only)
+- **Sample data:** [`leads/retest-customers-sample.csv`](leads/retest-customers-sample.csv)
+- **Calendar trigger:** _Monthly Retest Retention Check - Run Skill_ — 23rd of every month, trigger phrase `Run monthly retest check`.
+
+### Run it
+
+The engine expects a per-customer CRM keyed by `customer_id` with a `last_test_date`. There are two supported source shapes:
+
+**A. From the A+ Leads and Jobs Calendar export** (one row per job; what we currently get out of Squarespace / A+ Calendar):
+
+```bash
+# 1. Drop the A+ export at leads/aplus-jobs-calendar-<YYYY-MM-DD>_<YYYY-MM-DD>.csv
+# 2. Build the per-customer CRM:
+python3 leads/import_aplus_jobs_calendar.py \
+    --input leads/aplus-jobs-calendar-2025-10-14_2025-12-08.csv \
+    --output leads/retest-customers.csv
+# 3. Run the engine:
+python3 leads/retest_retention_check.py --as-of $(date +%F)
+```
+
+The importer dedupes jobs by phone (digits-only) when present, falls back to the first line of the Summary field otherwise, and writes the engine's expected schema.
+
+**B. From a hand-maintained Master CRM (Google Sheet `1TdNnf7eLaPNN3anaBGpNdjo_unK04zWwZJ859ZDvIO4`)**:
+
+```bash
+# 1. File → Download → CSV → save as leads/retest-customers.csv
+# 2. Run the engine:
+python3 leads/retest_retention_check.py --as-of $(date +%F)
+```
+
+If `leads/retest-customers.csv` is missing, the engine falls back to the synthetic sample dataset and stamps the report with a ⚠️ **Demo data** banner so nobody calls a fake customer.
+
+> ⚠️ **Coverage matters.** Make sure the source covers the full customer history, not just the last 8 weeks. A short slice will produce a report with 0 actionable rows because every customer's next-due date is too far out. The engine now writes a **Source coverage** + **12-month pipeline** section to make this visible.
+
+### Outputs
+
+Every run writes two files keyed by year/month:
+
+- `docs/retest-retention-YYYY-MM.md` — human-readable report (bucket counts, prioritized lead lists, ready-to-send email body).
+- `briefs/retest-retention-YYYY-MM.json` — machine-readable snapshot consumed by the Command Center.
+
+This month's run lives at [`docs/retest-retention-2026-06.md`](docs/retest-retention-2026-06.md).

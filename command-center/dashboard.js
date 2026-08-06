@@ -12,6 +12,9 @@ const Dashboard = {
     currentFilter: 'all',
     refreshInterval: null,
     
+    // Cold calls filter state
+    currentCCFilter: 'all',
+
     // Initialize dashboard
     init() {
         this.updateDateTime();
@@ -21,7 +24,9 @@ const Dashboard = {
         this.renderGoals();
         this.renderIntegrations();
         this.renderActivityFeed();
+        this.renderColdCalls();
         this.setupFilters();
+        this.setupColdCallFilters();
         this.startAutoRefresh();
         
         // Update datetime every second
@@ -291,6 +296,170 @@ const Dashboard = {
             CommandCenterData.activities.pop();
         }
         this.renderActivityFeed();
+    },
+
+    // ─── Cold Calls ──────────────────────────────────────────────────────────
+
+    renderColdCalls() {
+        const campaign = CommandCenterData.coldCallCampaign;
+        const leads = campaign.leads;
+
+        // Stats bar
+        const statsEl = document.getElementById('cold-calls-stats');
+        const hot = leads.filter(l => l.tier === 'hot').length;
+        const warm = leads.filter(l => l.tier === 'warm').length;
+        const called = leads.filter(l => l.status !== 'not_called').length;
+        const connected = leads.filter(l => l.status === 'connected' || l.status === 'interested').length;
+        const smsSent = leads.filter(l => l.smsSent).length;
+
+        const sendDt = new Date(campaign.scheduledSendTime);
+        const sendLabel = sendDt.toLocaleString('en-US', {
+            weekday: 'short', month: 'short', day: 'numeric',
+            hour: 'numeric', minute: '2-digit', hour12: true
+        });
+
+        statsEl.innerHTML = `
+            <div class="cc-stat hot"><span class="cc-stat-val">${hot}</span><span class="cc-stat-lbl">🔥 HOT</span></div>
+            <div class="cc-stat warm"><span class="cc-stat-val">${warm}</span><span class="cc-stat-lbl">🟡 WARM</span></div>
+            <div class="cc-stat"><span class="cc-stat-val">${leads.length}</span><span class="cc-stat-lbl">Total</span></div>
+            <div class="cc-stat"><span class="cc-stat-val">${called}</span><span class="cc-stat-lbl">Called</span></div>
+            <div class="cc-stat success"><span class="cc-stat-val">${connected}</span><span class="cc-stat-lbl">Connected</span></div>
+            <div class="cc-stat"><span class="cc-stat-val">${smsSent}</span><span class="cc-stat-lbl">SMS Sent</span></div>
+            <div class="cc-stat schedule"><span class="cc-stat-val sched-time">📅 ${sendLabel}</span><span class="cc-stat-lbl">Scheduled Send</span></div>
+        `;
+
+        // Lead list
+        const container = document.getElementById('cold-calls-list');
+        let filtered = leads;
+        if (this.currentCCFilter !== 'all') {
+            if (this.currentCCFilter === 'hot' || this.currentCCFilter === 'warm') {
+                filtered = leads.filter(l => l.tier === this.currentCCFilter);
+            } else if (this.currentCCFilter === 'not_called') {
+                filtered = leads.filter(l => l.status === 'not_called');
+            } else if (this.currentCCFilter === 'called') {
+                filtered = leads.filter(l => l.status !== 'not_called');
+            }
+        }
+
+        container.innerHTML = `<div class="cold-calls-grid">${filtered.map(lead => this.renderLeadCard(lead)).join('')}</div>`;
+
+        // Bind status change buttons
+        container.querySelectorAll('.cc-status-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const id = e.target.closest('[data-lead-id]').dataset.leadId;
+                const newStatus = e.target.dataset.status;
+                this.updateLeadStatus(id, newStatus);
+            });
+        });
+
+        // Bind SMS/email toggles
+        container.querySelectorAll('.cc-toggle-sms').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const id = e.target.closest('[data-lead-id]').dataset.leadId;
+                this.toggleLeadField(id, 'smsSent');
+            });
+        });
+        container.querySelectorAll('.cc-toggle-email').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const id = e.target.closest('[data-lead-id]').dataset.leadId;
+                this.toggleLeadField(id, 'emailSent');
+            });
+        });
+    },
+
+    renderLeadCard(lead) {
+        const tierClass = lead.tier === 'hot' ? 'lead-hot' : lead.tier === 'warm' ? 'lead-warm' : 'lead-cool';
+        const tierBadge = lead.tier === 'hot' ? '🔥 HOT' : lead.tier === 'warm' ? '🟡 WARM' : '❄️ COOL';
+        const statusLabel = {
+            not_called: 'Not Called',
+            called: 'Called',
+            voicemail: 'Voicemail',
+            connected: 'Connected',
+            interested: 'Interested',
+            not_interested: 'Not Interested',
+            scheduled: 'Scheduled'
+        }[lead.status] || lead.status;
+
+        const statusClass = {
+            not_called: '',
+            called: 'status-called',
+            voicemail: 'status-voicemail',
+            connected: 'status-connected',
+            interested: 'status-interested',
+            not_interested: 'status-not-interested',
+            scheduled: 'status-scheduled'
+        }[lead.status] || '';
+
+        const stars = lead.stars ? `⭐ ${lead.stars} (${lead.reviews})` : '';
+        const addr = lead.address ? `<div class="lead-address">${lead.address}</div>` : '';
+
+        return `
+        <div class="lead-card ${tierClass}" data-lead-id="${lead.id}">
+            <div class="lead-card-top">
+                <div class="lead-score-badge ${tierClass}">[${lead.score}] ${tierBadge}</div>
+                <div class="lead-status ${statusClass}">${statusLabel}</div>
+            </div>
+            <div class="lead-name">${lead.name}</div>
+            <div class="lead-meta">
+                <span class="lead-type">${lead.type}</span>
+                <span class="lead-city">📍 ${lead.city}</span>
+                ${stars ? `<span class="lead-stars">${stars}</span>` : ''}
+            </div>
+            ${addr}
+            <div class="lead-phone">
+                <a href="tel:${lead.phone.replace(/-/g, '')}" class="phone-link">📞 ${lead.phone}</a>
+            </div>
+            <div class="lead-actions">
+                <div class="lead-sent-badges">
+                    <button class="cc-toggle-sms sent-badge ${lead.smsSent ? 'sent' : ''}" title="Toggle SMS sent">
+                        ${lead.smsSent ? '✅ SMS' : '📱 SMS'}
+                    </button>
+                    <button class="cc-toggle-email sent-badge ${lead.emailSent ? 'sent' : ''}" title="Toggle email sent">
+                        ${lead.emailSent ? '✅ Email' : '📧 Email'}
+                    </button>
+                </div>
+                <div class="lead-status-btns">
+                    <button class="cc-status-btn" data-status="voicemail" title="Left voicemail">VM</button>
+                    <button class="cc-status-btn" data-status="connected" title="Connected">CON</button>
+                    <button class="cc-status-btn" data-status="interested" title="Interested">INT</button>
+                    <button class="cc-status-btn" data-status="not_interested" title="Not interested">✗</button>
+                </div>
+            </div>
+        </div>`;
+    },
+
+    updateLeadStatus(id, newStatus) {
+        const lead = CommandCenterData.coldCallCampaign.leads.find(l => l.id === id);
+        if (lead) {
+            lead.status = newStatus;
+            if (newStatus !== 'not_called') lead.called = true;
+            this.renderColdCalls();
+            this.addActivity({
+                id: `act-${Date.now()}`,
+                type: 'agent',
+                text: `<strong>Cold Call</strong> ${lead.name} marked as <em>${newStatus}</em>`,
+                time: 'Just now'
+            });
+        }
+    },
+
+    toggleLeadField(id, field) {
+        const lead = CommandCenterData.coldCallCampaign.leads.find(l => l.id === id);
+        if (lead) {
+            lead[field] = !lead[field];
+            this.renderColdCalls();
+        }
+    },
+
+    setupColdCallFilters() {
+        document.addEventListener('click', (e) => {
+            const btn = e.target.closest('[data-cc-filter]');
+            if (!btn) return;
+            document.querySelectorAll('[data-cc-filter]').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            this.currentCCFilter = btn.dataset.ccFilter;
+            this.renderColdCalls();
+        });
     }
 };
 
@@ -302,6 +471,7 @@ function refreshData(event) {
     Dashboard.renderGoals();
     Dashboard.renderIntegrations();
     Dashboard.renderActivityFeed();
+    Dashboard.renderColdCalls();
     
     // Add refresh activity
     Dashboard.addActivity({

@@ -1,0 +1,21 @@
+customer_id,company_name,contact_name,phone,email,city,vehicle_type,vehicle_count,last_test_date,test_cadence_months,preferred_channel,last_outcome,notes
+CUST-0001,Diablo Diesel Hauling,Marco Rivera,510-555-0142,marco@diablodiesel.example,Hayward,Class 8 Trucking,6,2025-06-10,12,call,passed,Long-time customer; pays on the spot
+CUST-0002,Bayside Arbor Pros,Kevin Lam,510-555-0177,kevin@baysidearbor.example,San Leandro,Tree Service,4,2025-06-12,12,call,passed,Prefers early-morning visits
+CUST-0003,Foothill Ready-Mix,Patricia Núñez,925-555-0193,pnunez@foothillrm.example,Castro Valley,Concrete,3,2025-06-15,12,call,passed,Mixer trucks 14k+ lbs
+CUST-0004,Tri-City Towing Co,Andre Brooks,510-555-0204,andre@tricitytow.example,Oakland,HD Towing,5,2025-07-05,12,call,passed,Two flatbeds + three wreckers
+CUST-0005,Mission Asphalt Inc,Jeff Calhoun,510-555-0221,jeff@missionasphalt.example,Hayward,Asphalt/Paving,4,2025-07-08,12,call,passed,Wants reminder text 48h before
+CUST-0006,GoldGate Drilling,Linh Pham,510-555-0245,linh@goldgatedrill.example,Fremont,Drilling/Excavation,3,2025-07-14,12,sms,rescheduled,Last visit got bumped by rain
+CUST-0007,Redwood Tree Surgeons,Eric Tanaka,650-555-0268,eric@redwoodtree.example,Redwood City,Tree Service,2,2025-07-22,12,call,passed,Owner-operator; cell is best
+CUST-0008,East Bay Concrete Pumping,Marisol Ortega,510-555-0289,marisol@ebconcrete.example,San Leandro,Concrete Pumping,4,2025-08-01,12,email,passed,CFO handles scheduling
+CUST-0009,Sierra Waste Hauling,Doug Whitaker,510-555-0312,doug@sierrawaste.example,Hayward,Waste/Hauling,8,2025-08-09,12,email,passed,Fleet manager prefers email
+CUST-0010,Northbay LTL Express,Sandra Liu,510-555-0341,sandra@northbayltl.example,San Leandro,LTL Freight,12,2025-08-15,12,email,passed,Largest customer by vehicle count
+CUST-0011,Coastal Tree & Stump,Brian Holloway,650-555-0367,brian@coastaltree.example,San Mateo,Tree Service,3,2025-08-22,12,call,passed,Routes through Hayward weekly
+CUST-0012,Iron Horse Trucking,Naomi Park,510-555-0388,naomi@ironhorse.example,Oakland,Trucking,5,2025-09-02,12,email,passed,Multi-yard schedule
+CUST-0013,Summit Concrete Inc,Raj Patel,925-555-0410,raj@summitconcrete.example,Dublin,Concrete,4,2025-09-15,12,email,passed,Send invoice via QuickBooks
+CUST-0014,Cascade Paving Co,Eddie Sandoval,510-555-0432,eddie@cascadepaving.example,Union City,Asphalt/Paving,3,2025-09-22,12,email,passed,Wants combined visit with sister co
+CUST-0015,Pacific Crane & Rigging,Tomás Ruiz,510-555-0456,tomas@pacificrane.example,Oakland,Crane/Rigging,2,2025-09-28,12,email,passed,Lift trucks 26k+ lbs
+CUST-0016,Westside Vacuum Trucks,Ana Beltrán,510-555-0478,ana@westsidevac.example,Hayward,Vacuum/Sewer,3,2025-12-05,12,email,passed,Books in early Q1
+CUST-0017,Alameda Tree Care LLC,Mike O'Donnell,510-555-0491,mike@alamedatree.example,Alameda,Tree Service,2,2025-12-12,12,email,passed,Two grapple trucks
+CUST-0018,Granite Bay Logistics,Felicia Owens,916-555-0517,felicia@granitebay.example,Sacramento,Trucking,7,2026-01-10,12,email,passed,Sacramento-based; quarterly visits
+CUST-0019,Harbor Bay Excavation,Daniel Cho,510-555-0539,daniel@harborbay.example,Alameda,Excavation,3,2026-01-22,12,email,passed,Owner pays via Zelle
+CUST-0020,Crosstown Couriers HD,Riley Bennett,510-555-0562,riley@crosstown.example,San Leandro,Trucking,4,2024-06-25,24,email,passed,Exempt-category 24-month cadence

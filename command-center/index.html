@@ -192,6 +192,34 @@
                 </div>
             </section>
 
+            <!-- Cold Calls Panel -->
+            <section class="panel cold-calls-panel">
+                <div class="panel-header">
+                    <h2>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.29 6.29l1.27-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+                        </svg>
+                        COLD CALLS — FLEET OUTREACH
+                    </h2>
+                    <div class="cold-calls-header-right">
+                        <span class="panel-badge warning" id="cold-calls-warning">⚠️ VERIFY IN CRM BEFORE CALLING</span>
+                        <div class="cold-call-filters">
+                            <button class="filter-btn active" data-cc-filter="all">All</button>
+                            <button class="filter-btn" data-cc-filter="hot">🔥 HOT</button>
+                            <button class="filter-btn" data-cc-filter="warm">🟡 WARM</button>
+                            <button class="filter-btn" data-cc-filter="not_called">Not Called</button>
+                            <button class="filter-btn" data-cc-filter="called">Called</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="cold-calls-stats" id="cold-calls-stats">
+                    <!-- Stats bar populated by JS -->
+                </div>
+                <div class="panel-content scrollable cold-calls-grid-wrap" id="cold-calls-list">
+                    <!-- Cold call leads populated by JS -->
+                </div>
+            </section>
+
             <!-- Live Activity Feed -->
             <section class="panel activity-panel">
                 <div class="panel-header">
