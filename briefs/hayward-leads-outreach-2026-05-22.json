@@ -1,0 +1,354 @@
+{
+  "brief": {
+    "id": "hayward-leads-outreach-2026-05-22",
+    "title": "Hayward/San Leandro Cold Call Outreach — SMS & Email Drafts",
+    "description": "Cold outreach for 22 diesel fleet leads in Hayward/San Leandro area. Bryan handles SMS directly (knows most contacts). Email sent via Make.com (10k credits). Track in Gumption cold calls.",
+    "type": "outreach-campaign",
+    "recipient": "Bryan",
+    "version": "2.0.0",
+    "status": "in-progress",
+    "smsStatus": "Bryan sending directly — most contacts known personally",
+    "emailStatus": "Make.com automation ready — fill Email column in Google Sheet, then run scenario",
+    "lastUpdated": "2026-08-05",
+    "dedupeWarning": "NOT yet deduped against Master CRM (1TdNnf7eLaPNN3anaBGpNdjo_unK04zWwZJ859ZDvIO4). Verify in Sheet before calling — some may already be customers.",
+    "gumptionTracker": "https://gumption.manus.space — add all leads under Cold Calls",
+    "makeComCredits": 10000,
+    "makeComEstimatedUsage": 88
+  },
+
+  "makeComSetup": {
+    "blueprint": "leads/make-com-email-blueprint.json",
+    "emailData": "leads/hayward-san-leandro-email-outreach.csv",
+    "workflow": [
+      "1. Upload hayward-san-leandro-email-outreach.csv to Google Sheets as 'Email_Outreach' tab",
+      "2. Fill in the Email column for each lead (look up on their website or Google listing)",
+      "3. Import make-com-email-blueprint.json into Make.com as a new scenario",
+      "4. Configure SMTP connection with bryan@norcalcarbmobile.com credentials",
+      "5. Connect Google Sheets modules to your spreadsheet",
+      "6. Test with 1 row (send to yourself), then run all",
+      "7. Check Email_Sent and Send_Result columns for confirmation"
+    ],
+    "creditsNote": "~88 operations total (4 per lead × 22 leads). You have 10,000 credits — plenty of headroom."
+  },
+
+  "voicemailScript": "Hey [Name], Bryan with NorCal CARB Mobile. I'll be in [city] today doing Clean Truck Checks for fleets right by you. If you've got diesels over 14,000 lbs I can knock yours out same trip — mobile OBD and OVI smoke opacity, 24/7, 363 days a year. Call me before the State calls you. [Your number].",
+
+  "smsTemplate": {
+    "scheduledFor": "2026-05-23T10:30:00-07:00",
+    "note": "Send SMS first at 10:30 AM tomorrow, then follow up with email.",
+    "defaultMessage": "Hi [Name], Bryan w/ NorCal CARB Mobile. I'm in [city] this week doing Clean Truck Checks — mobile OBD & smoke opacity for diesels 14k+ lbs. If you need yours done I can swing by, 24/7 availability. Want me to stop by? norcalcarbmobile.com"
+  },
+
+  "emailTemplate": {
+    "from": "Bryan @ NorCal CARB Mobile <bryan@norcalcarbmobile.com>",
+    "replyTo": "bryan@norcalcarbmobile.com",
+    "subjectLine": "Clean Truck Check — I'll Be in [City] This Week",
+    "body": "Hi [Name],\n\nBryan here with NorCal CARB Mobile. I'm running Clean Truck Checks in the [city] area this week and noticed your fleet might need compliance testing.\n\nIf you've got diesels over 14,000 lbs, I can come to you — mobile OBD and OVI smoke opacity testing, on-site at your yard. No downtime, no hauling trucks to a shop.\n\nWe're available 24/7, 363 days a year.\n\nWant me to swing by? Just reply to this email or call me directly.\n\nBryan\nNorCal CARB Mobile\nnorcalcarbmobile.com"
+  },
+
+  "leads": {
+    "hot": [
+      {
+        "rank": 85,
+        "company": "ArborTech Inc.",
+        "phone": "510-871-8788",
+        "industry": "Tree Service",
+        "city": "Hayward",
+        "reviews": 135,
+        "rating": 5.0,
+        "hours": "24/7",
+        "address": "1310 Ruus Ln, Hayward 94544",
+        "sms": "Hi ArborTech, Bryan w/ NorCal CARB Mobile. I'm in Hayward this week doing Clean Truck Checks — mobile OBD & smoke opacity for diesels 14k+ lbs. If your fleet needs compliance testing I can swing by your yard on Ruus Ln. Want me to stop by? norcalcarbmobile.com",
+        "email": {
+          "to": "[LOOKUP — ArborTech Inc. email]",
+          "subject": "Clean Truck Check — I'll Be in Hayward This Week",
+          "body": "Hi ArborTech team,\n\nBryan here with NorCal CARB Mobile. I'm running Clean Truck Checks in Hayward this week and noticed you're right on Ruus Ln — I'll be in the area.\n\nIf your tree service trucks are diesels over 14,000 lbs, I can come to your yard and knock out compliance testing on-site. Mobile OBD and OVI smoke opacity — no downtime for your crew.\n\n24/7 availability, 363 days a year. Want me to swing by?\n\nBryan\nNorCal CARB Mobile\nnorcalcarbmobile.com"
+        }
+      },
+      {
+        "rank": 80,
+        "company": "Saunders Tree Service Inc",
+        "phone": "925-200-9057",
+        "industry": "Tree Service",
+        "city": "Hayward",
+        "reviews": 78,
+        "rating": 4.9,
+        "hours": "24/7",
+        "address": "22844 Alice St, Hayward 94541",
+        "sms": "Hi Saunders Tree Service, Bryan w/ NorCal CARB Mobile. I'm in Hayward this week doing Clean Truck Checks — mobile OBD & smoke opacity for diesels 14k+ lbs. If your crew trucks need compliance testing I can come to you on Alice St. norcalcarbmobile.com",
+        "email": {
+          "to": "[LOOKUP — Saunders Tree Service email]",
+          "subject": "Clean Truck Check — I'll Be Near Alice St This Week",
+          "body": "Hi Saunders team,\n\nBryan here with NorCal CARB Mobile. I'm doing Clean Truck Checks in Hayward this week — right by your area on Alice St.\n\nIf your tree service rigs are diesels over 14,000 lbs, I can test them on-site at your yard. Mobile OBD and OVI smoke opacity testing, no shop visit needed.\n\n24/7, 363 days a year. Reply here or call me to schedule.\n\nBryan\nNorCal CARB Mobile\nnorcalcarbmobile.com"
+        }
+      },
+      {
+        "rank": 80,
+        "company": "Castillo Tree Service Inc",
+        "phone": "510-792-6590",
+        "industry": "Tree Service",
+        "city": "Hayward",
+        "reviews": 51,
+        "rating": 4.8,
+        "hours": "24/7",
+        "address": "25798 Franklin Ave, Hayward 94544",
+        "sms": "Hi Castillo Tree Service, Bryan w/ NorCal CARB Mobile. I'm in Hayward doing Clean Truck Checks this week — mobile OBD & smoke opacity for diesels 14k+ lbs. Can swing by Franklin Ave if your trucks need testing. norcalcarbmobile.com",
+        "email": {
+          "to": "[LOOKUP — Castillo Tree Service email]",
+          "subject": "Clean Truck Check — In Hayward This Week",
+          "body": "Hi Castillo team,\n\nBryan with NorCal CARB Mobile. I'm in Hayward this week running Clean Truck Checks and I'll be near Franklin Ave.\n\nIf your tree service trucks are diesels over 14,000 lbs, I can come to your yard — mobile OBD and OVI smoke opacity, on-site. No hauling trucks anywhere.\n\n24/7, 363 days a year. Let me know if you want me to stop by.\n\nBryan\nNorCal CARB Mobile\nnorcalcarbmobile.com"
+        }
+      },
+      {
+        "rank": 80,
+        "company": "Graham Tree Services Inc",
+        "phone": "510-383-9585",
+        "industry": "Tree Service",
+        "city": "San Leandro",
+        "reviews": 49,
+        "rating": 4.7,
+        "hours": "24/7",
+        "address": "520 Doolittle Dr, San Leandro 94577",
+        "sms": "Hi Graham Tree Services, Bryan w/ NorCal CARB Mobile. I'm in San Leandro this week doing Clean Truck Checks — mobile OBD & smoke opacity for diesels 14k+ lbs. Can stop by Doolittle Dr if your trucks need testing. norcalcarbmobile.com",
+        "email": {
+          "to": "[LOOKUP — Graham Tree Services email]",
+          "subject": "Clean Truck Check — Near Doolittle Dr This Week",
+          "body": "Hi Graham team,\n\nBryan here with NorCal CARB Mobile. I'll be in San Leandro this week doing Clean Truck Checks — right near your location on Doolittle Dr.\n\nIf your tree service trucks are diesels over 14,000 lbs, I can test them on-site. Mobile OBD and OVI smoke opacity — your crew keeps working while I handle compliance.\n\n24/7, 363 days a year. Want me to stop by?\n\nBryan\nNorCal CARB Mobile\nnorcalcarbmobile.com"
+        }
+      },
+      {
+        "rank": 75,
+        "company": "Boyett Concrete Inc",
+        "phone": "510-264-9100",
+        "industry": "Concrete",
+        "city": "Hayward",
+        "reviews": 16,
+        "rating": 4.9,
+        "hours": "24/7",
+        "address": "2404 Tripaldi Way, Hayward 94545",
+        "sms": "Hi Boyett Concrete, Bryan w/ NorCal CARB Mobile. I'm in Hayward doing Clean Truck Checks this week — mobile OBD & smoke opacity for diesels 14k+ lbs. Your mixers and haulers probably qualify. Can swing by Tripaldi Way. norcalcarbmobile.com",
+        "email": {
+          "to": "[LOOKUP — Boyett Concrete email]",
+          "subject": "Clean Truck Check for Your Concrete Fleet — Hayward This Week",
+          "body": "Hi Boyett team,\n\nBryan with NorCal CARB Mobile. I'm in Hayward this week doing Clean Truck Checks and I'll be near Tripaldi Way.\n\nConcrete mixers and haulers over 14,000 lbs need CARB compliance testing. I can come to your yard and do mobile OBD and OVI smoke opacity testing on-site — no downtime for your fleet.\n\n24/7, 363 days a year. Let me know if you want me to stop by.\n\nBryan\nNorCal CARB Mobile\nnorcalcarbmobile.com"
+        }
+      },
+      {
+        "rank": 75,
+        "company": "LS Trucking, Inc.",
+        "phone": "510-266-5213",
+        "industry": "Trucking",
+        "city": "Hayward",
+        "reviews": 15,
+        "rating": 4.3,
+        "hours": "24/7",
+        "address": "1774 W Winton Ave, Hayward 94545",
+        "sms": "Hi LS Trucking, Bryan w/ NorCal CARB Mobile. I'm in Hayward doing Clean Truck Checks — mobile OBD & smoke opacity for diesels 14k+ lbs. Can come to your yard on W Winton Ave. Want me to stop by? norcalcarbmobile.com",
+        "email": {
+          "to": "[LOOKUP — LS Trucking email]",
+          "subject": "Clean Truck Check — I'll Be on W Winton Ave This Week",
+          "body": "Hi LS Trucking team,\n\nBryan here with NorCal CARB Mobile. I'm running Clean Truck Checks in Hayward this week and I'll be right by W Winton Ave.\n\nIf your fleet has diesels over 14,000 lbs, I can test them on-site at your yard. Mobile OBD and OVI smoke opacity — no need to send trucks to a shop.\n\n24/7, 363 days a year. Reply or call to schedule.\n\nBryan\nNorCal CARB Mobile\nnorcalcarbmobile.com"
+        }
+      },
+      {
+        "rank": 70,
+        "company": "Daylight Transport",
+        "phone": "800-468-9999",
+        "industry": "Trucking/LTL",
+        "city": "Hayward",
+        "reviews": 98,
+        "rating": 3.6,
+        "hours": "Business hours",
+        "address": "2340 Industrial Pkwy W, Hayward 94545",
+        "sms": "Hi Daylight Transport, Bryan w/ NorCal CARB Mobile. I'm in Hayward doing Clean Truck Checks — mobile OBD & smoke opacity for diesels 14k+ lbs. Can come to your terminal on Industrial Pkwy. Want me to stop by? norcalcarbmobile.com",
+        "email": {
+          "to": "[LOOKUP — Daylight Transport local terminal email]",
+          "subject": "Clean Truck Check — At Industrial Pkwy This Week",
+          "body": "Hi Daylight Transport team,\n\nBryan with NorCal CARB Mobile. I'm doing Clean Truck Checks in Hayward this week and I'll be right on Industrial Pkwy W.\n\nFor your LTL fleet — diesels over 14,000 lbs need compliance testing. I can come to your terminal and test on-site. Mobile OBD and OVI smoke opacity, no disruption to operations.\n\n24/7, 363 days a year. Let me know if you'd like to schedule.\n\nBryan\nNorCal CARB Mobile\nnorcalcarbmobile.com"
+        }
+      }
+    ],
+    "warm": [
+      {
+        "rank": 68,
+        "company": "Baystar Trans Inc",
+        "phone": "510-586-9300",
+        "industry": "Trucking",
+        "city": "Hayward",
+        "sms": "Hi Baystar Trans, Bryan w/ NorCal CARB Mobile. I'm in Hayward doing Clean Truck Checks — mobile OBD & smoke opacity for diesels 14k+ lbs. Can come to your yard. norcalcarbmobile.com",
+        "email": {
+          "subject": "Clean Truck Check — Hayward This Week",
+          "body": "Hi Baystar Trans team,\n\nBryan with NorCal CARB Mobile. I'm in Hayward this week running Clean Truck Checks for local fleets.\n\nIf your trucks are diesels over 14,000 lbs, I can come to your yard — mobile OBD and OVI smoke opacity testing, on-site. 24/7, 363 days a year.\n\nWant me to stop by?\n\nBryan\nNorCal CARB Mobile\nnorcalcarbmobile.com"
+        }
+      },
+      {
+        "rank": 65,
+        "company": "Rangel Concrete",
+        "phone": "510-292-6207",
+        "industry": "Concrete",
+        "city": "San Lorenzo",
+        "sms": "Hi Rangel Concrete, Bryan w/ NorCal CARB Mobile. I'm in the Hayward/San Lorenzo area doing Clean Truck Checks — mobile OBD & smoke opacity for diesels 14k+ lbs. Mixers qualify. Can swing by. norcalcarbmobile.com",
+        "email": {
+          "subject": "Clean Truck Check for Your Concrete Fleet — San Lorenzo Area",
+          "body": "Hi Rangel Concrete team,\n\nBryan with NorCal CARB Mobile. I'm in the Hayward/San Lorenzo area this week doing Clean Truck Checks.\n\nConcrete mixers and haulers over 14,000 lbs need CARB compliance testing. I can come to you — mobile OBD and OVI smoke opacity, on-site. 24/7, 363 days.\n\nLet me know if you want me to stop by.\n\nBryan\nNorCal CARB Mobile\nnorcalcarbmobile.com"
+        }
+      },
+      {
+        "rank": 65,
+        "company": "Mag Trucking",
+        "phone": "510-782-8801",
+        "industry": "Trucking",
+        "city": "Hayward",
+        "sms": "Hi Mag Trucking, Bryan w/ NorCal CARB Mobile. I'm in Hayward doing Clean Truck Checks — mobile OBD & smoke opacity for diesels 14k+ lbs. Can come to your yard. norcalcarbmobile.com",
+        "email": {
+          "subject": "Clean Truck Check — Hayward This Week",
+          "body": "Hi Mag Trucking team,\n\nBryan with NorCal CARB Mobile. I'm in Hayward this week running Clean Truck Checks.\n\nDiesels over 14,000 lbs? I can come to your yard — mobile OBD and OVI smoke opacity, on-site. 24/7, 363 days.\n\nWant me to stop by?\n\nBryan\nNorCal CARB Mobile\nnorcalcarbmobile.com"
+        }
+      },
+      {
+        "rank": 65,
+        "company": "Cato's Paving",
+        "phone": "510-397-2677",
+        "industry": "Asphalt/Paving",
+        "city": "Hayward",
+        "sms": "Hi Cato's Paving, Bryan w/ NorCal CARB Mobile. I'm in Hayward doing Clean Truck Checks — mobile OBD & smoke opacity for diesels 14k+ lbs. Your pavers & haulers probably qualify. norcalcarbmobile.com",
+        "email": {
+          "subject": "Clean Truck Check for Paving Fleet — Hayward This Week",
+          "body": "Hi Cato's Paving team,\n\nBryan with NorCal CARB Mobile. I'm in Hayward this week doing Clean Truck Checks.\n\nPaving trucks, haulers, and equipment over 14,000 lbs need CARB compliance. I can test on-site at your yard — mobile OBD and OVI smoke opacity. 24/7, 363 days.\n\nLet me know if you'd like me to stop by.\n\nBryan\nNorCal CARB Mobile\nnorcalcarbmobile.com"
+        }
+      },
+      {
+        "rank": 65,
+        "company": "Estes Express Lines",
+        "phone": "510-635-0165",
+        "industry": "LTL Freight",
+        "city": "San Leandro",
+        "sms": "Hi Estes Express, Bryan w/ NorCal CARB Mobile. I'm in San Leandro doing Clean Truck Checks — mobile OBD & smoke opacity for diesels 14k+ lbs. Can come to your terminal. norcalcarbmobile.com",
+        "email": {
+          "subject": "Clean Truck Check — San Leandro Terminal This Week",
+          "body": "Hi Estes Express team,\n\nBryan with NorCal CARB Mobile. I'm in San Leandro this week doing Clean Truck Checks.\n\nFor your LTL fleet — diesels over 14,000 lbs need compliance testing. I can come to your terminal and test on-site. Mobile OBD and OVI smoke opacity, no disruption. 24/7, 363 days.\n\nWant to schedule?\n\nBryan\nNorCal CARB Mobile\nnorcalcarbmobile.com"
+        }
+      },
+      {
+        "rank": 65,
+        "company": "Saia LTL Freight",
+        "phone": "510-347-6890",
+        "industry": "LTL Freight",
+        "city": "San Leandro",
+        "sms": "Hi Saia LTL, Bryan w/ NorCal CARB Mobile. I'm in San Leandro doing Clean Truck Checks — mobile OBD & smoke opacity for diesels 14k+ lbs. Can come to your terminal. norcalcarbmobile.com",
+        "email": {
+          "subject": "Clean Truck Check — San Leandro Terminal This Week",
+          "body": "Hi Saia team,\n\nBryan with NorCal CARB Mobile. I'm in San Leandro this week doing Clean Truck Checks for local terminals.\n\nDiesels over 14,000 lbs? I can test on-site at your terminal — mobile OBD and OVI smoke opacity. No need to move trucks off-site. 24/7, 363 days.\n\nLet me know if you'd like to schedule.\n\nBryan\nNorCal CARB Mobile\nnorcalcarbmobile.com"
+        }
+      },
+      {
+        "rank": 65,
+        "company": "DHE Dependable Highway Express",
+        "phone": "510-357-2223",
+        "industry": "LTL",
+        "city": "San Leandro",
+        "sms": "Hi DHE, Bryan w/ NorCal CARB Mobile. I'm in San Leandro doing Clean Truck Checks — mobile OBD & smoke opacity for diesels 14k+ lbs. Can come to your terminal. norcalcarbmobile.com",
+        "email": {
+          "subject": "Clean Truck Check — San Leandro This Week",
+          "body": "Hi DHE team,\n\nBryan with NorCal CARB Mobile. I'm in San Leandro this week running Clean Truck Checks.\n\nYour LTL fleet — diesels over 14,000 lbs need compliance testing. I come to your terminal, test on-site. Mobile OBD and OVI smoke opacity. 24/7, 363 days.\n\nWant me to stop by?\n\nBryan\nNorCal CARB Mobile\nnorcalcarbmobile.com"
+        }
+      },
+      {
+        "rank": 65,
+        "company": "Maguire Tree Care",
+        "phone": "650-844-2046",
+        "industry": "Tree Service",
+        "city": "San Carlos",
+        "sms": "Hi Maguire Tree Care, Bryan w/ NorCal CARB Mobile. I'm in the Bay Area doing Clean Truck Checks — mobile OBD & smoke opacity for diesels 14k+ lbs. Can come to your yard in San Carlos. norcalcarbmobile.com",
+        "email": {
+          "subject": "Clean Truck Check — Bay Area This Week",
+          "body": "Hi Maguire Tree Care team,\n\nBryan with NorCal CARB Mobile. I'm running Clean Truck Checks in the Bay Area this week.\n\nIf your tree service trucks are diesels over 14,000 lbs, I can come to your San Carlos yard — mobile OBD and OVI smoke opacity, on-site. 24/7, 363 days.\n\nLet me know if you want me to stop by.\n\nBryan\nNorCal CARB Mobile\nnorcalcarbmobile.com"
+        }
+      },
+      {
+        "rank": 63,
+        "company": "10-4 Tow Of San Leandro",
+        "phone": "510-633-2727",
+        "industry": "HD Towing",
+        "city": "San Leandro",
+        "sms": "Hi 10-4 Tow, Bryan w/ NorCal CARB Mobile. I'm in San Leandro doing Clean Truck Checks — mobile OBD & smoke opacity for diesels 14k+ lbs. Your tow rigs probably qualify. norcalcarbmobile.com",
+        "email": {
+          "subject": "Clean Truck Check for Your Tow Fleet — San Leandro",
+          "body": "Hi 10-4 Tow team,\n\nBryan with NorCal CARB Mobile. I'm in San Leandro this week doing Clean Truck Checks.\n\nHeavy-duty tow rigs over 14,000 lbs need CARB compliance testing. I can come to your yard — mobile OBD and OVI smoke opacity, on-site. 24/7, 363 days.\n\nWant me to stop by?\n\nBryan\nNorCal CARB Mobile\nnorcalcarbmobile.com"
+        }
+      },
+      {
+        "rank": 60,
+        "company": "Roadstar Trucking Inc",
+        "phone": "510-487-2404",
+        "industry": "Trucking",
+        "city": "Hayward",
+        "sms": "Hi Roadstar Trucking, Bryan w/ NorCal CARB Mobile. I'm in Hayward doing Clean Truck Checks — mobile OBD & smoke opacity for diesels 14k+ lbs. Can come to your yard. norcalcarbmobile.com",
+        "email": {
+          "subject": "Clean Truck Check — Hayward This Week",
+          "body": "Hi Roadstar team,\n\nBryan with NorCal CARB Mobile. I'm in Hayward this week doing Clean Truck Checks.\n\nDiesels over 14,000 lbs? I can test on-site at your yard — mobile OBD and OVI smoke opacity. 24/7, 363 days.\n\nWant me to stop by?\n\nBryan\nNorCal CARB Mobile\nnorcalcarbmobile.com"
+        }
+      },
+      {
+        "rank": 60,
+        "company": "Munoz Transport Service",
+        "phone": "510-385-9206",
+        "industry": "Trucking",
+        "city": "Hayward",
+        "sms": "Hi Munoz Transport, Bryan w/ NorCal CARB Mobile. I'm in Hayward doing Clean Truck Checks — mobile OBD & smoke opacity for diesels 14k+ lbs. Can come to your yard. norcalcarbmobile.com",
+        "email": {
+          "subject": "Clean Truck Check — Hayward This Week",
+          "body": "Hi Munoz Transport team,\n\nBryan with NorCal CARB Mobile. I'm in Hayward this week running Clean Truck Checks.\n\nDiesels over 14,000 lbs? I test on-site at your yard — mobile OBD and OVI smoke opacity. 24/7, 363 days.\n\nLet me know if you'd like to schedule.\n\nBryan\nNorCal CARB Mobile\nnorcalcarbmobile.com"
+        }
+      },
+      {
+        "rank": 60,
+        "company": "American Asphalt R&R",
+        "phone": "510-723-0280",
+        "industry": "Asphalt",
+        "city": "Hayward",
+        "sms": "Hi American Asphalt, Bryan w/ NorCal CARB Mobile. I'm in Hayward doing Clean Truck Checks — mobile OBD & smoke opacity for diesels 14k+ lbs. Your haulers & trucks probably qualify. norcalcarbmobile.com",
+        "email": {
+          "subject": "Clean Truck Check for Asphalt Fleet — Hayward This Week",
+          "body": "Hi American Asphalt team,\n\nBryan with NorCal CARB Mobile. I'm in Hayward this week doing Clean Truck Checks.\n\nAsphalt haulers and trucks over 14,000 lbs need CARB compliance. I test on-site at your yard — mobile OBD and OVI smoke opacity. 24/7, 363 days.\n\nLet me know if you want me to stop by.\n\nBryan\nNorCal CARB Mobile\nnorcalcarbmobile.com"
+        }
+      },
+      {
+        "rank": 60,
+        "company": "Rose Paving",
+        "phone": "510-770-1150",
+        "industry": "Asphalt",
+        "city": "Hayward",
+        "sms": "Hi Rose Paving, Bryan w/ NorCal CARB Mobile. I'm in Hayward doing Clean Truck Checks — mobile OBD & smoke opacity for diesels 14k+ lbs. Your pavers & haulers probably qualify. norcalcarbmobile.com",
+        "email": {
+          "subject": "Clean Truck Check for Paving Fleet — Hayward This Week",
+          "body": "Hi Rose Paving team,\n\nBryan with NorCal CARB Mobile. I'm in Hayward this week doing Clean Truck Checks.\n\nPaving equipment and trucks over 14,000 lbs need CARB compliance. I test on-site — mobile OBD and OVI smoke opacity. 24/7, 363 days.\n\nWant me to stop by?\n\nBryan\nNorCal CARB Mobile\nnorcalcarbmobile.com"
+        }
+      },
+      {
+        "rank": 60,
+        "company": "Malcolm Drilling",
+        "phone": "510-780-9181",
+        "industry": "Drilling/Excavation",
+        "city": "Hayward",
+        "sms": "Hi Malcolm Drilling, Bryan w/ NorCal CARB Mobile. I'm in Hayward doing Clean Truck Checks — mobile OBD & smoke opacity for diesels 14k+ lbs. Your rigs probably qualify. norcalcarbmobile.com",
+        "email": {
+          "subject": "Clean Truck Check for Drilling Fleet — Hayward This Week",
+          "body": "Hi Malcolm Drilling team,\n\nBryan with NorCal CARB Mobile. I'm in Hayward this week doing Clean Truck Checks.\n\nDrilling rigs and trucks over 14,000 lbs need CARB compliance testing. I come to your yard — mobile OBD and OVI smoke opacity, on-site. 24/7, 363 days.\n\nLet me know if you'd like to schedule.\n\nBryan\nNorCal CARB Mobile\nnorcalcarbmobile.com"
+        }
+      },
+      {
+        "rank": 60,
+        "company": "GreenWaste Hayward Transfer",
+        "phone": "510-606-1548",
+        "industry": "Waste",
+        "city": "Hayward",
+        "sms": "Hi GreenWaste, Bryan w/ NorCal CARB Mobile. I'm in Hayward doing Clean Truck Checks — mobile OBD & smoke opacity for diesels 14k+ lbs. Your waste haulers definitely qualify. norcalcarbmobile.com",
+        "email": {
+          "subject": "Clean Truck Check for Waste Fleet — Hayward This Week",
+          "body": "Hi GreenWaste team,\n\nBryan with NorCal CARB Mobile. I'm in Hayward this week doing Clean Truck Checks.\n\nWaste haulers over 14,000 lbs need CARB compliance testing. I come to your transfer station — mobile OBD and OVI smoke opacity, on-site. No trucks leave your yard. 24/7, 363 days.\n\nWant me to stop by?\n\nBryan\nNorCal CARB Mobile\nnorcalcarbmobile.com"
+        }
+      }
+    ]
+  }
+}

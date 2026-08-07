@@ -47,9 +47,9 @@ const CommandCenterData = {
             role: "Communications Handler",
             avatar: "EA",
             status: "busy",
-            description: "Processes incoming emails, drafts responses, and manages follow-ups",
+            description: "Processes incoming emails, drafts responses, and manages follow-ups. Active: Make.com email outreach for 22 Hayward/SL leads",
             tier: "operations",
-            tasksCompleted: 234,
+            tasksCompleted: 235,
             efficiency: 92
         },
         {
@@ -79,10 +79,10 @@ const CommandCenterData = {
             name: "NorCal Operations",
             role: "Business Operations",
             avatar: "NC",
-            status: "active",
-            description: "Manages NorCal Carb Mobile operations, orders, and logistics",
+            status: "busy",
+            description: "Manages NorCal Carb Mobile operations, orders, and logistics. Active: Hayward/SL cold call outreach (22 leads)",
             tier: "business",
-            tasksCompleted: 78,
+            tasksCompleted: 79,
             efficiency: 91
         },
         {
@@ -253,6 +253,39 @@ const CommandCenterData = {
             priority: "medium",
             dueDate: "This Week",
             progress: 100
+        },
+        {
+            id: "task-014",
+            title: "Add Hayward/SL Leads to Gumption Cold Calls",
+            description: "Upload 22 leads to gumption.manus.space under Cold Calls for tracking. CSV: leads/hayward-san-leandro-2026-05-22.csv",
+            agent: "client-agent",
+            agentName: "Client Relations",
+            status: "pending",
+            priority: "high",
+            dueDate: "Today",
+            progress: 0
+        },
+        {
+            id: "task-015",
+            title: "Dedupe Hayward Leads Against Master CRM",
+            description: "Cross-reference 22 new leads against Master CRM sheet (1TdNnf7eLaPNN3anaBGpNdjo_unK04zWwZJ859ZDvIO4) to identify existing customers before outreach.",
+            agent: "client-agent",
+            agentName: "Client Relations",
+            status: "pending",
+            priority: "critical",
+            dueDate: "Today, Before Email Send",
+            progress: 0
+        },
+        {
+            id: "task-016",
+            title: "Make.com Email Scenario — Configure & Run",
+            description: "Import blueprint (leads/make-com-email-blueprint.json), connect SMTP for bryan@norcalcarbmobile.com, link Google Sheet with email outreach data, test 1 row, then send all. ~88 ops / 10,000 credits available.",
+            agent: "email-agent",
+            agentName: "Email Agent",
+            status: "active",
+            priority: "high",
+            dueDate: "Today",
+            progress: 25
         }
     ],
 
@@ -473,11 +506,46 @@ const CommandCenterData = {
     // Activity Feed
     activities: [
         {
+            id: "act-015",
+            type: "task_complete",
+            icon: "check",
+            text: "<strong>Email Agent</strong> Make.com email blueprint ready — 22 personalized emails queued. Upload CSV to Sheets, fill emails, run scenario (~88 ops / 10k credits).",
+            time: "Just now"
+        },
+        {
+            id: "act-014",
+            type: "task_complete",
+            icon: "check",
+            text: "<strong>NorCal Operations</strong> Bryan handling SMS directly — knows most contacts personally. Email automation via Make.com.",
+            time: "1 min ago"
+        },
+        {
+            id: "act-012",
+            type: "task_complete",
+            icon: "check",
+            text: "<strong>NorCal Operations</strong> prepared 22 cold call leads (Hayward/San Leandro) — SMS drafts ready, tap-to-call HTML live",
+            time: "2 min ago"
+        },
+        {
+            id: "act-011",
+            type: "alert",
+            icon: "alert",
+            text: "<strong>Client Relations</strong> WARNING: Hayward leads NOT deduped against Master CRM — verify before emailing",
+            time: "3 min ago"
+        },
+        {
+            id: "act-010",
+            type: "email",
+            icon: "mail",
+            text: "<strong>Email Agent</strong> drafted personalized emails for 7 HOT + 15 WARM leads — Make.com blueprint + Google Sheets CSV ready",
+            time: "5 min ago"
+        },
+        {
             id: "act-001",
             type: "task_complete",
             icon: "check",
             text: "<strong>Calendar Agent</strong> completed daily schedule optimization",
-            time: "2 min ago"
+            time: "5 min ago"
         },
         {
             id: "act-retest",
@@ -491,7 +559,7 @@ const CommandCenterData = {
             type: "email",
             icon: "mail",
             text: "<strong>Email Agent</strong> prepared CARB Testing email draft — action required: fill contacts &amp; send via Squarespace",
-            time: "Just now"
+            time: "10 min ago"
         },
         {
             id: "act-002",

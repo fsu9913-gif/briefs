@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>NorCal CARB — Lead Manager</title>
+<style>
+:root{--bg:#0a0e14;--card:#141b24;--border:#1e2a38;--hot:#ff6b35;--warm:#f4a261;--green:#2dd4bf;--red:#ef4444;--text:#e8eef4;--muted:#8b9cb3;--dim:#3a4a5c}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);padding:0 0 140px;-webkit-user-select:none;user-select:none}
+header{padding:14px 16px 10px;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--bg);z-index:50}
+header h1{font-size:1.1rem;margin-bottom:2px}
+.stats-row{display:flex;gap:12px;margin-top:8px;font-size:.75rem;color:var(--muted)}
+.stats-row .s{padding:3px 8px;border-radius:6px;background:var(--card)}
+.stats-row .s b{color:var(--green)}
+.filters{display:flex;gap:6px;padding:10px 16px;overflow-x:auto;border-bottom:1px solid var(--border)}
+.filters button{padding:6px 14px;border:1px solid var(--border);border-radius:20px;background:transparent;color:var(--muted);font-size:.75rem;white-space:nowrap;cursor:pointer}
+.filters button.on{border-color:var(--green);color:var(--green);background:#2dd4bf15}
+.list{padding:8px 12px}
+.lead{background:var(--card);border-radius:12px;margin-bottom:10px;overflow:hidden;border-left:4px solid var(--warm);transition:opacity .2s}
+.lead.hot{border-left-color:var(--hot)}
+.lead.done{opacity:.35;order:999}
+.lead.deleted{display:none}
+.lead-top{padding:12px 14px 0;display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+.lead-name{font-weight:700;font-size:.95rem}
+.badge{font-size:.65rem;padding:2px 7px;border-radius:99px;background:#1e2a38;color:var(--muted);flex-shrink:0}
+.lead-meta{padding:4px 14px;font-size:.78rem;color:var(--muted)}
+.lead-meta span+span::before{content:" · "}
+.lead-date{padding:2px 14px 8px;font-size:.72rem;color:var(--dim)}
+.lead-date b{color:var(--green)}
+.lead-date .never{color:var(--hot)}
+.lead-note{padding:0 14px 8px;font-size:.72rem;color:var(--muted);font-style:italic}
+.actions{display:flex;border-top:1px solid #1a2230}
+.actions a,.actions button{flex:1;display:flex;align-items:center;justify-content:center;gap:4px;padding:12px 0;font-size:.72rem;font-weight:600;text-decoration:none;color:var(--text);background:transparent;border:none;border-right:1px solid #1a2230;cursor:pointer;transition:background .15s}
+.actions a:last-child,.actions button:last-child{border-right:none}
+.actions a:active,.actions button:active{background:#ffffff10}
+.act-sms{color:#2dd4bf!important}
+.act-call{color:#60a5fa!important}
+.act-email{color:#a78bfa!important}
+.act-del{color:#ef4444!important}
+.modal-bg{display:none;position:fixed;inset:0;background:#000a;z-index:100;align-items:flex-end;justify-content:center}
+.modal-bg.show{display:flex}
+.modal{background:var(--card);border-radius:16px 16px 0 0;padding:20px 16px 32px;width:100%;max-width:480px;max-height:70vh;overflow-y:auto}
+.modal h3{font-size:1rem;margin-bottom:12px}
+.modal label{display:block;font-size:.78rem;color:var(--muted);margin:10px 0 4px}
+.modal input,.modal textarea,.modal select{width:100%;padding:10px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);font-size:.85rem;font-family:inherit}
+.modal textarea{height:60px;resize:vertical}
+.modal .btn-row{display:flex;gap:8px;margin-top:16px}
+.modal .btn{flex:1;padding:12px;border:none;border-radius:8px;font-size:.85rem;font-weight:600;cursor:pointer}
+.btn-save{background:var(--green);color:#0a0e14}
+.btn-cancel{background:var(--border);color:var(--text)}
+.empty{text-align:center;padding:60px 20px;color:var(--dim);font-size:.9rem}
+.bottom-bar{position:fixed;bottom:0;left:0;right:0;background:#0d1218ee;backdrop-filter:blur(8px);border-top:1px solid var(--border);padding:10px 16px;display:flex;justify-content:space-between;align-items:center;font-size:.72rem;color:var(--muted);z-index:50}
+.bottom-bar a{color:var(--green);text-decoration:none}
+.export-btn{padding:6px 12px;border:1px solid var(--green);border-radius:6px;background:transparent;color:var(--green);font-size:.7rem;font-weight:600;cursor:pointer}
+</style>
+</head>
+<body>
+<header>
+  <h1>NorCal CARB — Leads</h1>
+  <div class="stats-row">
+    <span class="s" id="st-total"></span>
+    <span class="s" id="st-contacted"></span>
+    <span class="s" id="st-success"></span>
+    <span class="s" id="st-rate"></span>
+  </div>
+</header>
+<div class="filters" id="filters"></div>
+<div class="list" id="list"></div>
+<div class="modal-bg" id="modal-bg"><div class="modal" id="modal"></div></div>
+<div class="bottom-bar">
+  <span id="sync-status"></span>
+  <span><a href="https://gumption.manus.space/coldcall" target="_blank">Open Gumption</a></span>
+  <button class="export-btn" onclick="exportCSV()">Export CSV</button>
+</div>
+
+<script>
+const STORE_KEY = 'norcal_leads_v2';
+const DEFAULT_LEADS = [
+  {id:"l01",name:"ArborTech Inc.",phone:"510-871-8788",type:"Tree Service",city:"Hayward",address:"1310 Ruus Ln, Hayward 94544",score:85,tier:"hot",reviews:135,stars:5.0,lastTest:"",status:"new",contacted:false,result:"",notes:"",deleted:false},
+  {id:"l02",name:"Saunders Tree Service Inc",phone:"925-200-9057",type:"Tree Service",city:"Hayward",address:"22844 Alice St, Hayward 94541",score:80,tier:"hot",reviews:78,stars:4.9,lastTest:"",status:"new",contacted:false,result:"",notes:"",deleted:false},
+  {id:"l03",name:"Castillo Tree Service Inc",phone:"510-792-6590",type:"Tree Service",city:"Hayward",address:"25798 Franklin Ave, Hayward 94544",score:80,tier:"hot",reviews:51,stars:4.8,lastTest:"",status:"new",contacted:false,result:"",notes:"",deleted:false},
+  {id:"l04",name:"Graham Tree Services Inc",phone:"510-383-9585",type:"Tree Service",city:"San Leandro",address:"520 Doolittle Dr, San Leandro 94577",score:80,tier:"hot",reviews:49,stars:4.7,lastTest:"",status:"new",contacted:false,result:"",notes:"",deleted:false},
+  {id:"l05",name:"Boyett Concrete Inc",phone:"510-264-9100",type:"Concrete",city:"Hayward",address:"2404 Tripaldi Way, Hayward 94545",score:75,tier:"hot",reviews:16,stars:4.9,lastTest:"",status:"new",contacted:false,result:"",notes:"",deleted:false},
+  {id:"l06",name:"LS Trucking, Inc.",phone:"510-266-5213",type:"Trucking",city:"Hayward",address:"1774 W Winton Ave, Hayward 94545",score:75,tier:"hot",reviews:15,stars:4.3,lastTest:"",status:"new",contacted:false,result:"",notes:"",deleted:false},
+  {id:"l07",name:"Daylight Transport",phone:"800-468-9999",type:"Trucking/LTL",city:"Hayward",address:"2340 Industrial Pkwy W, Hayward 94545",score:70,tier:"hot",reviews:98,stars:3.6,lastTest:"",status:"new",contacted:false,result:"",notes:"Has telematics — may not need us",deleted:false},
+  {id:"l08",name:"Baystar Trans Inc",phone:"510-586-9300",type:"Trucking",city:"Hayward",address:"",score:68,tier:"warm",lastTest:"",status:"new",contacted:false,result:"",notes:"",deleted:false},
+  {id:"l09",name:"Rangel Concrete",phone:"510-292-6207",type:"Concrete",city:"San Lorenzo",address:"",score:65,tier:"warm",lastTest:"",status:"new",contacted:false,result:"",notes:"",deleted:false},
+  {id:"l10",name:"Mag Trucking",phone:"510-782-8801",type:"Trucking",city:"Hayward",address:"",score:65,tier:"warm",lastTest:"",status:"new",contacted:false,result:"",notes:"",deleted:false},
+  {id:"l11",name:"Cato's Paving",phone:"510-397-2677",type:"Asphalt/Paving",city:"Hayward",address:"",score:65,tier:"warm",lastTest:"",status:"new",contacted:false,result:"",notes:"",deleted:false},
+  {id:"l12",name:"Estes Express Lines",phone:"510-635-0165",type:"LTL Freight",city:"San Leandro",address:"",score:65,tier:"warm",lastTest:"",status:"new",contacted:false,result:"",notes:"Big fleet — may have telematics",deleted:false},
+  {id:"l13",name:"Saia LTL Freight",phone:"510-347-6890",type:"LTL Freight",city:"San Leandro",address:"",score:65,tier:"warm",lastTest:"",status:"new",contacted:false,result:"",notes:"Big fleet — may have telematics",deleted:false},
+  {id:"l14",name:"DHE Dependable Highway Express",phone:"510-357-2223",type:"LTL",city:"San Leandro",address:"",score:65,tier:"warm",lastTest:"",status:"new",contacted:false,result:"",notes:"",deleted:false},
+  {id:"l15",name:"Maguire Tree Care",phone:"650-844-2046",type:"Tree Service",city:"San Carlos",address:"",score:65,tier:"warm",lastTest:"",status:"new",contacted:false,result:"",notes:"Sweet spot — tree co, likely 4-5 trucks",deleted:false},
+  {id:"l16",name:"10-4 Tow Of San Leandro",phone:"510-633-2727",type:"HD Towing",city:"San Leandro",address:"",score:63,tier:"warm",lastTest:"",status:"new",contacted:false,result:"",notes:"",deleted:false},
+  {id:"l17",name:"Roadstar Trucking Inc",phone:"510-487-2404",type:"Trucking",city:"Hayward",address:"",score:60,tier:"warm",lastTest:"",status:"new",contacted:false,result:"",notes:"",deleted:false},
+  {id:"l18",name:"Munoz Transport Service",phone:"510-385-9206",type:"Trucking",city:"Hayward",address:"",score:60,tier:"warm",lastTest:"",status:"new",contacted:false,result:"",notes:"",deleted:false},
+  {id:"l19",name:"American Asphalt R&R",phone:"510-723-0280",type:"Asphalt",city:"Hayward",address:"",score:60,tier:"warm",lastTest:"",status:"new",contacted:false,result:"",notes:"",deleted:false},
+  {id:"l20",name:"Rose Paving",phone:"510-770-1150",type:"Asphalt",city:"Hayward",address:"",score:60,tier:"warm",lastTest:"",status:"new",contacted:false,result:"",notes:"",deleted:false},
+  {id:"l21",name:"Malcolm Drilling",phone:"510-780-9181",type:"Drilling/Excavation",city:"Hayward",address:"",score:60,tier:"warm",lastTest:"",status:"new",contacted:false,result:"",notes:"",deleted:false},
+  {id:"l22",name:"GreenWaste Hayward Transfer",phone:"510-606-1548",type:"Waste",city:"Hayward",address:"",score:60,tier:"warm",lastTest:"",status:"new",contacted:false,result:"",notes:"",deleted:false}
+];
+
+let leads = [];
+let filter = 'all';
+
+function load() {
+  const saved = localStorage.getItem(STORE_KEY);
+  if (saved) {
+    try { leads = JSON.parse(saved); } catch(e) { leads = structuredClone(DEFAULT_LEADS); }
+  } else {
+    leads = structuredClone(DEFAULT_LEADS);
+  }
+}
+function save() {
+  localStorage.setItem(STORE_KEY, JSON.stringify(leads));
+}
+
+function getStats() {
+  const active = leads.filter(l => !l.deleted);
+  const contacted = active.filter(l => l.contacted);
+  const won = active.filter(l => l.result === 'booked' || l.result === 'interested');
+  const rate = contacted.length ? Math.round(won.length / contacted.length * 100) : 0;
+  return { total: active.length, contacted: contacted.length, won: won.length, rate };
+}
+
+function renderStats() {
+  const s = getStats();
+  document.getElementById('st-total').innerHTML = `<b>${s.total}</b> leads`;
+  document.getElementById('st-contacted').innerHTML = `<b>${s.contacted}</b> contacted`;
+  document.getElementById('st-success').innerHTML = `<b>${s.won}</b> won`;
+  document.getElementById('st-rate').innerHTML = `<b>${s.rate}%</b> rate`;
+  document.getElementById('sync-status').textContent = `Saved locally · ${leads.filter(l=>!l.deleted).length} leads`;
+}
+
+function renderFilters() {
+  const tags = ['all','hot','warm','new','contacted','booked','deleted'];
+  const labels = {all:'All',hot:'Hot',warm:'Warm',new:'Not Called',contacted:'Contacted',booked:'Won',deleted:'Removed'};
+  document.getElementById('filters').innerHTML = tags.map(t =>
+    `<button class="${filter===t?'on':''}" onclick="setFilter('${t}')">${labels[t]}</button>`
+  ).join('');
+}
+
+function setFilter(f) { filter = f; renderFilters(); renderList(); }
+
+function renderList() {
+  let items = leads;
+  if (filter === 'deleted') { items = items.filter(l => l.deleted); }
+  else {
+    items = items.filter(l => !l.deleted);
+    if (filter === 'hot') items = items.filter(l => l.tier === 'hot');
+    if (filter === 'warm') items = items.filter(l => l.tier === 'warm');
+    if (filter === 'new') items = items.filter(l => !l.contacted);
+    if (filter === 'contacted') items = items.filter(l => l.contacted);
+    if (filter === 'booked') items = items.filter(l => l.result === 'booked' || l.result === 'interested');
+  }
+  items.sort((a,b) => {
+    if (a.contacted !== b.contacted) return a.contacted ? 1 : -1;
+    return b.score - a.score;
+  });
+  if (!items.length) {
+    document.getElementById('list').innerHTML = '<div class="empty">No leads in this view</div>';
+    return;
+  }
+  const smsBody = (l) => encodeURIComponent(`Hi ${l.name.split(' ')[0]}, Bryan w/ NorCal CARB Mobile. I'm in ${l.city} doing Clean Truck Checks — mobile OBD & smoke opacity for diesels 14k+ lbs. Can swing by. norcalcarbmobile.com`);
+  document.getElementById('list').innerHTML = items.map(l => {
+    const dateStr = l.lastTest ? `Last test: <b>${l.lastTest}</b>` : '<span class="never">No test on file</span>';
+    const resultTag = l.result ? ` · ${l.result}` : '';
+    return `<div class="lead ${l.tier} ${l.contacted?'done':''} ${l.deleted?'deleted':''}" id="card-${l.id}">
+      <div class="lead-top">
+        <span class="lead-name">${l.name}</span>
+        <span class="badge">${l.score}${resultTag}</span>
+      </div>
+      <div class="lead-meta"><span>${l.type}</span><span>${l.city}</span>${l.address?`<span>${l.address}</span>`:''}</div>
+      <div class="lead-date">${dateStr}</div>
+      ${l.notes ? `<div class="lead-note">${l.notes}</div>` : ''}
+      <div class="actions">
+        <a href="sms:${l.phone.replace(/-/g,'')}&body=${smsBody(l)}" class="act-sms" onclick="markContacted('${l.id}')">SMS</a>
+        <a href="tel:${l.phone.replace(/-/g,'')}" class="act-call" onclick="markContacted('${l.id}')">Call</a>
+        <button class="act-email" onclick="openNote('${l.id}')">Edit</button>
+        <button class="act-del" onclick="removeLead('${l.id}')">${l.deleted?'Undo':'Del'}</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function markContacted(id) {
+  const l = leads.find(x => x.id === id);
+  if (l && !l.contacted) {
+    l.contacted = true;
+    l.status = 'contacted';
+    save(); renderStats();
+  }
+}
+
+function removeLead(id) {
+  const l = leads.find(x => x.id === id);
+  if (l) {
+    l.deleted = !l.deleted;
+    save(); renderStats(); renderList();
+  }
+}
+
+function openNote(id) {
+  const l = leads.find(x => x.id === id);
+  if (!l) return;
+  const results = ['','interested','booked','not interested','has telematics','wrong number','no answer','left voicemail','call back later'];
+  document.getElementById('modal').innerHTML = `
+    <h3>${l.name}</h3>
+    <label>Result</label>
+    <select id="m-result">${results.map(r => `<option value="${r}" ${l.result===r?'selected':''}>${r||'— none —'}</option>`).join('')}</select>
+    <label>Last Test Date</label>
+    <input type="date" id="m-date" value="${l.lastTest}">
+    <label>VIN / Fleet Notes</label>
+    <textarea id="m-notes">${l.notes||''}</textarea>
+    <div class="btn-row">
+      <button class="btn btn-cancel" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-save" onclick="saveNote('${l.id}')">Save</button>
+    </div>`;
+  document.getElementById('modal-bg').classList.add('show');
+}
+
+function saveNote(id) {
+  const l = leads.find(x => x.id === id);
+  if (!l) return;
+  l.result = document.getElementById('m-result').value;
+  l.lastTest = document.getElementById('m-date').value;
+  l.notes = document.getElementById('m-notes').value;
+  if (l.result && !l.contacted) { l.contacted = true; l.status = 'contacted'; }
+  save(); closeModal(); renderStats(); renderList();
+}
+
+function closeModal() { document.getElementById('modal-bg').classList.remove('show'); }
+
+function exportCSV() {
+  const active = leads.filter(l => !l.deleted);
+  const header = 'Company,Phone,Priority,Stage,City,Category,Lead Score,Last Test,Result,Notes';
+  const rows = active.map(l =>
+    `"${l.name}","${l.phone}","${l.tier.toUpperCase()}","${l.contacted?'Contacted':'New'}","${l.city}","${l.type}",${l.score},"${l.lastTest}","${l.result}","${(l.notes||'').replace(/"/g,'""')}"`
+  );
+  const csv = header + '\n' + rows.join('\n');
+  const blob = new Blob([csv], {type:'text/csv'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = `norcal-leads-${new Date().toISOString().slice(0,10)}.csv`;
+  a.click(); URL.revokeObjectURL(url);
+}
+
+document.getElementById('modal-bg').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+load(); renderStats(); renderFilters(); renderList();
+</script>
+</body>
+</html>

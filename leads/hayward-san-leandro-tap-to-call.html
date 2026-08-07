@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hayward/San Leandro Leads — Tap to Call</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0a0e17;
+            color: #e2e8f0;
+            padding: 12px;
+            padding-bottom: 80px;
+        }
+        .header {
+            text-align: center;
+            padding: 16px 8px;
+            margin-bottom: 12px;
+            border-bottom: 2px solid #00d4ff33;
+        }
+        .header h1 {
+            font-size: 1.2rem;
+            color: #00d4ff;
+            margin-bottom: 4px;
+        }
+        .header .subtitle {
+            font-size: 0.75rem;
+            color: #64748b;
+        }
+        .header .warning {
+            background: #ff475722;
+            color: #ff6b7a;
+            padding: 8px;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            margin-top: 8px;
+            border: 1px solid #ff475744;
+        }
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin: 12px 0;
+        }
+        .stat {
+            text-align: center;
+            padding: 8px 14px;
+            border-radius: 8px;
+            background: #111827;
+            border: 1px solid #1e293b;
+        }
+        .stat-value { font-size: 1.4rem; font-weight: 700; }
+        .stat-label { font-size: 0.6rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; }
+        .stat.hot .stat-value { color: #ff4757; }
+        .stat.warm .stat-value { color: #ffb700; }
+        .stat.total .stat-value { color: #00d4ff; }
+        .section-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: 10px 0 6px;
+            margin-top: 16px;
+            border-bottom: 1px solid #1e293b;
+        }
+        .section-label.hot { color: #ff4757; }
+        .section-label.warm { color: #ffb700; }
+        .lead {
+            display: flex;
+            align-items: stretch;
+            gap: 0;
+            margin: 8px 0;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid #1e293b;
+            background: #111827;
+        }
+        .lead-info {
+            flex: 1;
+            padding: 12px;
+        }
+        .lead-name {
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: #f1f5f9;
+            margin-bottom: 2px;
+        }
+        .lead-meta {
+            font-size: 0.7rem;
+            color: #64748b;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px 10px;
+        }
+        .lead-meta .stars { color: #ffb700; }
+        .lead-address {
+            font-size: 0.65rem;
+            color: #475569;
+            margin-top: 4px;
+        }
+        .score-badge {
+            font-size: 0.6rem;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: #0a0e17;
+            display: inline-block;
+            margin-left: 6px;
+            vertical-align: middle;
+        }
+        .score-badge.hot { background: #ff4757; }
+        .score-badge.warm { background: #ffb700; }
+        .call-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 72px;
+            min-height: 72px;
+            text-decoration: none;
+            color: white;
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            flex-direction: column;
+            gap: 4px;
+            transition: background 0.15s;
+        }
+        .call-btn.hot { background: #dc2626; }
+        .call-btn.warm { background: #d97706; }
+        .call-btn:active { filter: brightness(0.8); }
+        .call-btn svg { width: 24px; height: 24px; fill: white; }
+        .sms-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 56px;
+            text-decoration: none;
+            color: white;
+            font-size: 0.55rem;
+            font-weight: 700;
+            flex-direction: column;
+            gap: 3px;
+            background: #0d9488;
+        }
+        .sms-btn:active { filter: brightness(0.8); }
+        .sms-btn svg { width: 20px; height: 20px; fill: white; }
+        .status-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #111827ee;
+            backdrop-filter: blur(8px);
+            border-top: 1px solid #1e293b;
+            padding: 10px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.7rem;
+            z-index: 100;
+        }
+        .status-bar .counter { color: #00d4ff; font-weight: 700; }
+        .voicemail-btn {
+            display: block;
+            text-align: center;
+            padding: 12px;
+            margin: 16px 0;
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            color: #94a3b8;
+            font-size: 0.75rem;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .voicemail-btn:active { background: #334155; }
+        .vm-script {
+            display: none;
+            background: #0f172a;
+            border: 1px solid #1e293b;
+            border-radius: 8px;
+            padding: 14px;
+            margin: 0 0 16px;
+            font-size: 0.8rem;
+            line-height: 1.5;
+            color: #cbd5e1;
+        }
+        .vm-script.show { display: block; }
+        .vm-script strong { color: #00d4ff; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Hayward / San Leandro Leads</h1>
+        <div class="subtitle">NorCal CARB Mobile &bull; 2026-05-22 &bull; SMS @ 10:30 AM Tomorrow</div>
+        <div class="warning">
+            NOT deduped against Master CRM. Verify in Sheet before calling &mdash; some may already be customers.
+        </div>
+    </div>
+
+    <div class="stats">
+        <div class="stat hot">
+            <div class="stat-value">7</div>
+            <div class="stat-label">Hot</div>
+        </div>
+        <div class="stat warm">
+            <div class="stat-value">15</div>
+            <div class="stat-label">Warm</div>
+        </div>
+        <div class="stat total">
+            <div class="stat-value">22</div>
+            <div class="stat-label">Total</div>
+        </div>
+    </div>
+
+    <div class="voicemail-btn" onclick="toggleVM()">Show Voicemail Script</div>
+    <div class="vm-script" id="vm-script">
+        "Hey <strong>[Name]</strong>, Bryan with NorCal CARB Mobile. I'll be in <strong>[city]</strong> today doing Clean Truck Checks for fleets right by you. If you've got diesels over 14,000 lbs I can knock yours out same trip &mdash; mobile OBD and OVI smoke opacity, 24/7, 363 days a year. Call me before the State calls you. <strong>[Your number]</strong>."
+    </div>
+
+    <div class="section-label hot">HOT &mdash; Call First (7)</div>
+
+    <div class="lead">
+        <div class="lead-info">
+            <div class="lead-name">ArborTech Inc. <span class="score-badge hot">85</span></div>
+            <div class="lead-meta">
+                <span>Tree Service</span>
+                <span>Hayward</span>
+                <span class="stars">5.0&#9733; (135)</span>
+                <span>24/7</span>
+            </div>
+            <div class="lead-address">1310 Ruus Ln, Hayward 94544</div>
+        </div>
+        <a href="sms:510-871-8788&body=Hi%20ArborTech%2C%20Bryan%20w%2F%20NorCal%20CARB%20Mobile.%20I%27m%20in%20Hayward%20doing%20Clean%20Truck%20Checks%20%E2%80%94%20mobile%20OBD%20%26%20smoke%20opacity%20for%20diesels%2014k%2B%20lbs.%20Can%20swing%20by%20Ruus%20Ln.%20norcalcarbmobile.com" class="sms-btn"><svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>SMS</a>
+        <a href="tel:510-871-8788" class="call-btn hot"><svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>CALL</a>
+    </div>
+
+    <div class="lead">
+        <div class="lead-info">
+            <div class="lead-name">Saunders Tree Service Inc <span class="score-badge hot">80</span></div>
+            <div class="lead-meta">
+                <span>Tree Service</span>
+                <span>Hayward</span>
+                <span class="stars">4.9&#9733; (78)</span>
+                <span>24/7</span>
+            </div>
+            <div class="lead-address">22844 Alice St, Hayward 94541</div>
+        </div>
+        <a href="sms:925-200-9057&body=Hi%20Saunders%20Tree%20Service%2C%20Bryan%20w%2F%20NorCal%20CARB%20Mobile.%20I%27m%20in%20Hayward%20doing%20Clean%20Truck%20Checks%20%E2%80%94%20mobile%20OBD%20%26%20smoke%20opacity%20for%20diesels%2014k%2B%20lbs.%20norcalcarbmobile.com" class="sms-btn"><svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>SMS</a>
+        <a href="tel:925-200-9057" class="call-btn hot"><svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>CALL</a>
+    </div>
+
+    <div class="lead">
+        <div class="lead-info">
+            <div class="lead-name">Castillo Tree Service Inc <span class="score-badge hot">80</span></div>
+            <div class="lead-meta">
+                <span>Tree Service</span>
+                <span>Hayward</span>
+                <span class="stars">4.8&#9733; (51)</span>
+                <span>24/7</span>
+            </div>
+            <div class="lead-address">25798 Franklin Ave, Hayward 94544</div>
+        </div>
+        <a href="sms:510-792-6590&body=Hi%20Castillo%20Tree%20Service%2C%20Bryan%20w%2F%20NorCal%20CARB%20Mobile.%20I%27m%20in%20Hayward%20doing%20Clean%20Truck%20Checks%20%E2%80%94%20mobile%20OBD%20%26%20smoke%20opacity%20for%20diesels%2014k%2B%20lbs.%20norcalcarbmobile.com" class="sms-btn"><svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>SMS</a>
+        <a href="tel:510-792-6590" class="call-btn hot"><svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>CALL</a>
+    </div>
+
+    <div class="lead">
+        <div class="lead-info">
+            <div class="lead-name">Graham Tree Services Inc <span class="score-badge hot">80</span></div>
+            <div class="lead-meta">
+                <span>Tree Service</span>
+                <span>San Leandro</span>
+                <span class="stars">4.7&#9733; (49)</span>
+                <span>24/7</span>
+            </div>
+            <div class="lead-address">520 Doolittle Dr, San Leandro 94577</div>
+        </div>
+        <a href="sms:510-383-9585&body=Hi%20Graham%20Tree%20Services%2C%20Bryan%20w%2F%20NorCal%20CARB%20Mobile.%20I%27m%20in%20San%20Leandro%20doing%20Clean%20Truck%20Checks%20%E2%80%94%20mobile%20OBD%20%26%20smoke%20opacity%20for%20diesels%2014k%2B%20lbs.%20norcalcarbmobile.com" class="sms-btn"><svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>SMS</a>
+        <a href="tel:510-383-9585" class="call-btn hot"><svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>CALL</a>
+    </div>
+
+    <div class="lead">
+        <div class="lead-info">
+            <div class="lead-name">Boyett Concrete Inc <span class="score-badge hot">75</span></div>
+            <div class="lead-meta">
+                <span>Concrete</span>
+                <span>Hayward</span>
+                <span class="stars">4.9&#9733; (16)</span>
+                <span>24/7</span>
+            </div>
+            <div class="lead-address">2404 Tripaldi Way, Hayward 94545</div>
+        </div>
+        <a href="sms:510-264-9100&body=Hi%20Boyett%20Concrete%2C%20Bryan%20w%2F%20NorCal%20CARB%20Mobile.%20I%27m%20in%20Hayward%20doing%20Clean%20Truck%20Checks%20%E2%80%94%20mobile%20OBD%20%26%20smoke%20opacity%20for%20diesels%2014k%2B%20lbs.%20Your%20mixers%20probably%20qualify.%20norcalcarbmobile.com" class="sms-btn"><svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>SMS</a>
+        <a href="tel:510-264-9100" class="call-btn hot"><svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>CALL</a>
+    </div>
+
+    <div class="lead">
+        <div class="lead-info">
+            <div class="lead-name">LS Trucking, Inc. <span class="score-badge hot">75</span></div>
+            <div class="lead-meta">
+                <span>Trucking</span>
+                <span>Hayward</span>
+                <span class="stars">4.3&#9733; (15)</span>
+                <span>24/7</span>
+            </div>
+            <div class="lead-address">1774 W Winton Ave, Hayward 94545</div>
+        </div>
+        <a href="sms:510-266-5213&body=Hi%20LS%20Trucking%2C%20Bryan%20w%2F%20NorCal%20CARB%20Mobile.%20I%27m%20in%20Hayward%20doing%20Clean%20Truck%20Checks%20%E2%80%94%20mobile%20OBD%20%26%20smoke%20opacity%20for%20diesels%2014k%2B%20lbs.%20Can%20come%20to%20W%20Winton%20Ave.%20norcalcarbmobile.com" class="sms-btn"><svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>SMS</a>
+        <a href="tel:510-266-5213" class="call-btn hot"><svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>CALL</a>
+    </div>
+
+    <div class="lead">
+        <div class="lead-info">
+            <div class="lead-name">Daylight Transport <span class="score-badge hot">70</span></div>
+            <div class="lead-meta">
+                <span>Trucking/LTL</span>
+                <span>Hayward</span>
+                <span class="stars">3.6&#9733; (98)</span>
+            </div>
+            <div class="lead-address">2340 Industrial Pkwy W, Hayward 94545</div>
+        </div>
+        <a href="sms:800-468-9999&body=Hi%20Daylight%20Transport%2C%20Bryan%20w%2F%20NorCal%20CARB%20Mobile.%20I%27m%20in%20Hayward%20doing%20Clean%20Truck%20Checks%20%E2%80%94%20mobile%20OBD%20%26%20smoke%20opacity%20for%20diesels%2014k%2B%20lbs.%20Can%20come%20to%20Industrial%20Pkwy.%20norcalcarbmobile.com" class="sms-btn"><svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>SMS</a>
+        <a href="tel:800-468-9999" class="call-btn hot"><svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>CALL</a>
+    </div>
+
+    <div class="section-label warm">WARM &mdash; Follow Up (15)</div>
+
+    <div class="lead">
+        <div class="lead-info">
+            <div class="lead-name">Baystar Trans Inc <span class="score-badge warm">68</span></div>
+            <div class="lead-meta"><span>Trucking</span><span>Hayward</span></div>
+        </div>
+        <a href="sms:510-586-9300&body=Hi%20Baystar%20Trans%2C%20Bryan%20w%2F%20NorCal%20CARB%20Mobile.%20I%27m%20in%20Hayward%20doing%20Clean%20Truck%20Checks%20%E2%80%94%20mobile%20OBD%20%26%20smoke%20opacity%20for%20diesels%2014k%2B%20lbs.%20norcalcarbmobile.com" class="sms-btn"><svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>SMS</a>
+        <a href="tel:510-586-9300" class="call-btn warm"><svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>CALL</a>
+    </div>
+
+    <div class="lead">
+        <div class="lead-info">
+            <div class="lead-name">Rangel Concrete <span class="score-badge warm">65</span></div>
+            <div class="lead-meta"><span>Concrete</span><span>San Lorenzo</span></div>
+        </div>
+        <a href="sms:510-292-6207&body=Hi%20Rangel%20Concrete%2C%20Bryan%20w%2F%20NorCal%20CARB%20Mobile.%20I%27m%20in%20the%20Hayward%2FSan%20Lorenzo%20area%20doing%20Clean%20Truck%20Checks%20%E2%80%94%20diesels%2014k%2B%20lbs.%20norcalcarbmobile.com" class="sms-btn"><svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>SMS</a>
+        <a href="tel:510-292-6207" class="call-btn warm"><svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>CALL</a>
+    </div>
+
+    <div class="lead">
+        <div class="lead-info">
+            <div class="lead-name">Mag Trucking <span class="score-badge warm">65</span></div>
+            <div class="lead-meta"><span>Trucking</span><span>Hayward</span></div>
+        </div>
+        <a href="sms:510-782-8801&body=Hi%20Mag%20Trucking%2C%20Bryan%20w%2F%20NorCal%20CARB%20Mobile.%20I%27m%20in%20Hayward%20doing%20Clean%20Truck%20Checks%20%E2%80%94%20diesels%2014k%2B%20lbs.%20norcalcarbmobile.com" class="sms-btn"><svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>SMS</a>
+        <a href="tel:510-782-8801" class="call-btn warm"><svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>CALL</a>
+    </div>
+
+    <div class="lead">
+        <div class="lead-info">
+            <div class="lead-name">Cato's Paving <span class="score-badge warm">65</span></div>
+            <div class="lead-meta"><span>Asphalt/Paving</span><span>Hayward</span></div>
+        </div>
+        <a href="sms:510-397-2677&body=Hi%20Cato%27s%20Paving%2C%20Bryan%20w%2F%20NorCal%20CARB%20Mobile.%20I%27m%20in%20Hayward%20doing%20Clean%20Truck%20Checks%20%E2%80%94%20diesels%2014k%2B%20lbs.%20norcalcarbmobile.com" class="sms-btn"><svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>SMS</a>
+        <a href="tel:510-397-2677" class="call-btn warm"><svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>CALL</a>
+    </div>
+
+    <div class="lead">
+        <div class="lead-info">
+            <div class="lead-name">Estes Express Lines <span class="score-badge warm">65</span></div>
+            <div class="lead-meta"><span>LTL Freight</span><span>San Leandro</span></div>
+        </div>
+        <a href="sms:510-635-0165&body=Hi%20Estes%20Express%2C%20Bryan%20w%2F%20NorCal%20CARB%20Mobile.%20I%27m%20in%20San%20Leandro%20doing%20Clean%20Truck%20Checks%20%E2%80%94%20diesels%2014k%2B%20lbs.%20norcalcarbmobile.com" class="sms-btn"><svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>SMS</a>
+        <a href="tel:510-635-0165" class="call-btn warm"><svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>CALL</a>
+    </div>
+
+    <div class="lead">
+        <div class="lead-info">
+            <div class="lead-name">Saia LTL Freight <span class="score-badge warm">65</span></div>
+            <div class="lead-meta"><span>LTL Freight</span><span>San Leandro</span></div>
+        </div>
+        <a href="sms:510-347-6890&body=Hi%20Saia%20LTL%2C%20Bryan%20w%2F%20NorCal%20CARB%20Mobile.%20I%27m%20in%20San%20Leandro%20doing%20Clean%20Truck%20Checks%20%E2%80%94%20diesels%2014k%2B%20lbs.%20norcalcarbmobile.com" class="sms-btn"><svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>SMS</a>
+        <a href="tel:510-347-6890" class="call-btn warm"><svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>CALL</a>
+    </div>
+
+    <div class="lead">
+        <div class="lead-info">
+            <div class="lead-name">DHE Dependable Highway Express <span class="score-badge warm">65</span></div>
+            <div class="lead-meta"><span>LTL</span><span>San Leandro</span></div>
+        </div>
+        <a href="sms:510-357-2223&body=Hi%20DHE%2C%20Bryan%20w%2F%20NorCal%20CARB%20Mobile.%20I%27m%20in%20San%20Leandro%20doing%20Clean%20Truck%20Checks%20%E2%80%94%20diesels%2014k%2B%20lbs.%20norcalcarbmobile.com" class="sms-btn"><svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>SMS</a>
+        <a href="tel:510-357-2223" class="call-btn warm"><svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>CALL</a>
+    </div>
+
+    <div class="lead">
+        <div class="lead-info">
+            <div class="lead-name">Maguire Tree Care <span class="score-badge warm">65</span></div>
+            <div class="lead-meta"><span>Tree Service</span><span>San Carlos</span></div>
+        </div>
+        <a href="sms:650-844-2046&body=Hi%20Maguire%20Tree%20Care%2C%20Bryan%20w%2F%20NorCal%20CARB%20Mobile.%20I%27m%20in%20the%20Bay%20Area%20doing%20Clean%20Truck%20Checks%20%E2%80%94%20diesels%2014k%2B%20lbs.%20norcalcarbmobile.com" class="sms-btn"><svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>SMS</a>
+        <a href="tel:650-844-2046" class="call-btn warm"><svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>CALL</a>
+    </div>
+
+    <div class="lead">
+        <div class="lead-info">
+            <div class="lead-name">10-4 Tow Of San Leandro <span class="score-badge warm">63</span></div>
+            <div class="lead-meta"><span>HD Towing</span><span>San Leandro</span></div>
+        </div>
+        <a href="sms:510-633-2727&body=Hi%2010-4%20Tow%2C%20Bryan%20w%2F%20NorCal%20CARB%20Mobile.%20I%27m%20in%20San%20Leandro%20doing%20Clean%20Truck%20Checks%20%E2%80%94%20diesels%2014k%2B%20lbs.%20Your%20tow%20rigs%20probably%20qualify.%20norcalcarbmobile.com" class="sms-btn"><svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>SMS</a>
+        <a href="tel:510-633-2727" class="call-btn warm"><svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>CALL</a>
+    </div>
+
+    <div class="lead">
+        <div class="lead-info">
+            <div class="lead-name">Roadstar Trucking Inc <span class="score-badge warm">60</span></div>
+            <div class="lead-meta"><span>Trucking</span><span>Hayward</span></div>
+        </div>
+        <a href="sms:510-487-2404&body=Hi%20Roadstar%20Trucking%2C%20Bryan%20w%2F%20NorCal%20CARB%20Mobile.%20I%27m%20in%20Hayward%20doing%20Clean%20Truck%20Checks%20%E2%80%94%20diesels%2014k%2B%20lbs.%20norcalcarbmobile.com" class="sms-btn"><svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>SMS</a>
+        <a href="tel:510-487-2404" class="call-btn warm"><svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>CALL</a>
+    </div>
+
+    <div class="lead">
+        <div class="lead-info">
+            <div class="lead-name">Munoz Transport Service <span class="score-badge warm">60</span></div>
+            <div class="lead-meta"><span>Trucking</span><span>Hayward</span></div>
+        </div>
+        <a href="sms:510-385-9206&body=Hi%20Munoz%20Transport%2C%20Bryan%20w%2F%20NorCal%20CARB%20Mobile.%20I%27m%20in%20Hayward%20doing%20Clean%20Truck%20Checks%20%E2%80%94%20diesels%2014k%2B%20lbs.%20norcalcarbmobile.com" class="sms-btn"><svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>SMS</a>
+        <a href="tel:510-385-9206" class="call-btn warm"><svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>CALL</a>
+    </div>
+
+    <div class="lead">
+        <div class="lead-info">
+            <div class="lead-name">American Asphalt R&R <span class="score-badge warm">60</span></div>
+            <div class="lead-meta"><span>Asphalt</span><span>Hayward</span></div>
+        </div>
+        <a href="sms:510-723-0280&body=Hi%20American%20Asphalt%2C%20Bryan%20w%2F%20NorCal%20CARB%20Mobile.%20I%27m%20in%20Hayward%20doing%20Clean%20Truck%20Checks%20%E2%80%94%20diesels%2014k%2B%20lbs.%20norcalcarbmobile.com" class="sms-btn"><svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>SMS</a>
+        <a href="tel:510-723-0280" class="call-btn warm"><svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>CALL</a>
+    </div>
+
+    <div class="lead">
+        <div class="lead-info">
+            <div class="lead-name">Rose Paving <span class="score-badge warm">60</span></div>
+            <div class="lead-meta"><span>Asphalt</span><span>Hayward</span></div>
+        </div>
+        <a href="sms:510-770-1150&body=Hi%20Rose%20Paving%2C%20Bryan%20w%2F%20NorCal%20CARB%20Mobile.%20I%27m%20in%20Hayward%20doing%20Clean%20Truck%20Checks%20%E2%80%94%20diesels%2014k%2B%20lbs.%20norcalcarbmobile.com" class="sms-btn"><svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>SMS</a>
+        <a href="tel:510-770-1150" class="call-btn warm"><svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>CALL</a>
+    </div>
+
+    <div class="lead">
+        <div class="lead-info">
+            <div class="lead-name">Malcolm Drilling <span class="score-badge warm">60</span></div>
+            <div class="lead-meta"><span>Drilling/Excavation</span><span>Hayward</span></div>
+        </div>
+        <a href="sms:510-780-9181&body=Hi%20Malcolm%20Drilling%2C%20Bryan%20w%2F%20NorCal%20CARB%20Mobile.%20I%27m%20in%20Hayward%20doing%20Clean%20Truck%20Checks%20%E2%80%94%20diesels%2014k%2B%20lbs.%20norcalcarbmobile.com" class="sms-btn"><svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>SMS</a>
+        <a href="tel:510-780-9181" class="call-btn warm"><svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>CALL</a>
+    </div>
+
+    <div class="lead">
+        <div class="lead-info">
+            <div class="lead-name">GreenWaste Hayward Transfer <span class="score-badge warm">60</span></div>
+            <div class="lead-meta"><span>Waste</span><span>Hayward</span></div>
+        </div>
+        <a href="sms:510-606-1548&body=Hi%20GreenWaste%2C%20Bryan%20w%2F%20NorCal%20CARB%20Mobile.%20I%27m%20in%20Hayward%20doing%20Clean%20Truck%20Checks%20%E2%80%94%20diesels%2014k%2B%20lbs.%20Your%20haulers%20qualify.%20norcalcarbmobile.com" class="sms-btn"><svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>SMS</a>
+        <a href="tel:510-606-1548" class="call-btn warm"><svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>CALL</a>
+    </div>
+
+    <div class="status-bar">
+        <span>22 leads &bull; Hayward/SL</span>
+        <span class="counter" id="counter">0 called</span>
+    </div>
+
+    <script>
+        let called = 0;
+        document.querySelectorAll('.call-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                called++;
+                document.getElementById('counter').textContent = called + ' called';
+                this.closest('.lead').style.opacity = '0.4';
+                this.closest('.lead').style.borderColor = '#22c55e';
+            });
+        });
+        function toggleVM() {
+            document.getElementById('vm-script').classList.toggle('show');
+        }
+    </script>
+</body>
+</html>
