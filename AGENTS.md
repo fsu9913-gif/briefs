@@ -71,6 +71,20 @@ The engine prefers `leads/retest-customers.csv` (real Master CRM export) when pr
 
 This repo has **no** ESLint, Prettier, test runner, or build pipeline. Verification is manual (browser) or HTTP checks on static assets.
 
+### Lead prospecting (NAICS + CRM dedupe)
+
+Current customers belong on the retest list, not cold-call lists. Prospecting flow:
+
+```bash
+python3 leads/naics_prospecting.py --analyze-crm
+python3 leads/naics_prospecting.py --queries --cities Hayward,"San Leandro"
+python3 leads/naics_prospecting.py --dedupe leads/candidate-leads.csv
+```
+
+- NAICS / Google search terms: `leads/naics-sweet-spot.json`
+- Phone UI for working leads: `leads/lead-manager.html`
+- Exclusion CRM: `leads/retest-customers.csv` (or full Master CRM export)
+
 ### External integrations (not in repo)
 
-Silverback AI, NorCal Carb Mobile, Notion, and Squarespace are referenced in UI copy and briefs but are **not wired** in code. Dashboard data comes from mock data in `command-center/data.js`.
+Silverback AI, NorCal Carb Mobile, Notion, Squarespace, and Gumption (`gumption.manus.space`) are referenced in UI/docs but are **not wired** in this repo. Dashboard data comes from mock data in `command-center/data.js`. Gumption is the live CRM — this repo feeds it CSVs and dialer pages.

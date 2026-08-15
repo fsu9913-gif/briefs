@@ -1,0 +1,111 @@
+{
+  "purpose": "NAICS codes for industries that match NorCal CARB Mobile's diesel fleet sweet spot. Use these to search Google Business Profile for similar companies. Current CRM customers must NEVER appear on cold-call lead lists — they belong on the recurring retest list.",
+  "sweet_spot_note": "Best conversion: tree companies with 4–5 trucks, small mechanical/construction fleets (e.g. ARC Mechanical), local haulers. Avoid mega fleets with telematics (Frito-Lay, national LTL) unless you already have a relationship.",
+  "industries": [
+    {
+      "label": "Tree Service / Landscaping",
+      "naics": ["561730"],
+      "naics_name": "Landscaping Services",
+      "google_search_terms": ["tree service", "tree care", "arborist", "tree removal", "landscaping"],
+      "fleet_signal": "chipper trucks, boom trucks, dump trucks — usually 14k+ diesel",
+      "priority": 1,
+      "sweet_spot": true
+    },
+    {
+      "label": "Concrete / Ready-Mix",
+      "naics": ["327320", "238110"],
+      "naics_name": "Ready-Mix Concrete Manufacturing / Poured Concrete Foundation",
+      "google_search_terms": ["concrete", "ready mix", "concrete contractor", "shotcrete"],
+      "fleet_signal": "mixers and material haulers over 14k",
+      "priority": 2,
+      "sweet_spot": true
+    },
+    {
+      "label": "Asphalt / Paving",
+      "naics": ["237310", "324121"],
+      "naics_name": "Highway, Street, and Bridge Construction / Asphalt Paving Mixture",
+      "google_search_terms": ["paving", "asphalt", "asphalt contractor", "road paving"],
+      "fleet_signal": "pavers, rollers, dump trucks",
+      "priority": 2,
+      "sweet_spot": true
+    },
+    {
+      "label": "Local Trucking / General Freight",
+      "naics": ["484110", "484121", "484122"],
+      "naics_name": "General Freight Trucking (Local / Long-Distance TL / LTL)",
+      "google_search_terms": ["trucking company", "freight trucking", "local trucking", "hauling"],
+      "fleet_signal": "straight trucks and semis — core CTC market",
+      "priority": 2,
+      "sweet_spot": true,
+      "caution": "Skip national LTL brands with telematics programs unless relationship exists"
+    },
+    {
+      "label": "Specialized Freight / Dump / Construction Hauling",
+      "naics": ["484220", "484230"],
+      "naics_name": "Specialized Freight Trucking (Local / Long-Distance)",
+      "google_search_terms": ["dump truck", "construction hauling", "material hauling", "dirt hauling"],
+      "fleet_signal": "dump trucks, flatbeds, lowboys",
+      "priority": 2,
+      "sweet_spot": true
+    },
+    {
+      "label": "Towing / Roadside / Heavy Recovery",
+      "naics": ["488410"],
+      "naics_name": "Motor Vehicle Towing",
+      "google_search_terms": ["towing", "heavy duty towing", "truck towing", "recovery"],
+      "fleet_signal": "HD wreckers and rollback trucks often 14k+",
+      "priority": 3,
+      "sweet_spot": true
+    },
+    {
+      "label": "Waste Collection / Transfer",
+      "naics": ["562111", "562119", "562920"],
+      "naics_name": "Solid Waste Collection / Other Waste Collection / Materials Recovery",
+      "google_search_terms": ["waste hauling", "garbage truck", "recycling", "transfer station"],
+      "fleet_signal": "refuse trucks — always diesel heavy",
+      "priority": 3,
+      "sweet_spot": false,
+      "caution": "Larger waste cos often have in-house compliance"
+    },
+    {
+      "label": "Site Prep / Excavation / Drilling",
+      "naics": ["238910", "213111"],
+      "naics_name": "Site Preparation Contractors / Drilling Oil and Gas Wells (adapt locally)",
+      "google_search_terms": ["excavation", "grading", "site preparation", "drilling contractor"],
+      "fleet_signal": "excavators + haul trucks",
+      "priority": 3,
+      "sweet_spot": true
+    },
+    {
+      "label": "Plumbing / HVAC / Mechanical Contractors",
+      "naics": ["238220", "238210"],
+      "naics_name": "Plumbing, Heating, and Air-Conditioning / Electrical Contractors",
+      "google_search_terms": ["mechanical contractor", "HVAC contractor", "plumbing contractor", "commercial mechanical"],
+      "fleet_signal": "service vans + occasional diesel box trucks / boom trucks — ARC Mechanical type",
+      "priority": 1,
+      "sweet_spot": true
+    },
+    {
+      "label": "Fence / Specialty Trade",
+      "naics": ["238990"],
+      "naics_name": "All Other Specialty Trade Contractors",
+      "google_search_terms": ["fence company", "fence contractor", "specialty contractor"],
+      "fleet_signal": "light–medium diesel flatbeds",
+      "priority": 4,
+      "sweet_spot": true
+    }
+  ],
+  "google_business_profile_search_template": {
+    "description": "Search Google Maps / Business Profile for each term + city. Export or copy results, then run naics_prospecting.py --dedupe against CRM.",
+    "query_format": "\"{search_term}\" near {city} CA",
+    "example_queries": [
+      "tree service near Hayward CA",
+      "concrete contractor near San Leandro CA",
+      "mechanical contractor near Hayward CA",
+      "dump truck hauling near Hayward CA",
+      "heavy duty towing near San Leandro CA"
+    ],
+    "markets": ["Hayward", "San Leandro", "San Lorenzo", "Oakland", "Fremont", "Union City", "Castro Valley"]
+  },
+  "exclusion_rule": "Any phone (digits-only) or company name that matches leads/retest-customers.csv OR Master CRM goes to RETEST list, never to cold-call lead list."
+}
