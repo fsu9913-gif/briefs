@@ -506,6 +506,9 @@ function openBriefing() {
 // Initialize on DOM ready
 document.addEventListener('DOMContentLoaded', () => {
     Dashboard.init();
+
+    document.getElementById('btn-refresh').addEventListener('click', (e) => refreshData(e));
+    document.getElementById('btn-briefing').addEventListener('click', () => openBriefing());
 });
 
 // Export for testing
