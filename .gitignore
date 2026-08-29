@@ -1,0 +1,18 @@
+# Real CRM exports — never commit actual customer data
+leads/retest-customers.csv
+
+# Environment and secrets
+.env
+.env.*
+
+# OS and editor artifacts
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# IDE settings
+.idea/
+.vscode/
+*.code-workspace
